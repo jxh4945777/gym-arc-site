@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gym-Arc</title>
 <meta content="cover" name="claude:viewport-fit-sides"/>
-<meta content="Gym-Arc by DataArc: company-specific RL environments, Verifiers and evaluations that teach agents to read business rules and decide by them." name="description"/>
+<meta content="Gym-Arc（DataArc）：把企业规则编译成可训练、可验收的 RL 环境、Verifier 与评测，让 Agent 读懂业务规则再做决策。" name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
@@ -257,6 +257,11 @@ section.band.alt{background:linear-gradient(180deg,var(--carbon-2),var(--carbon)
 footer{padding-block:40px 56px}
 footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:.8rem;color:var(--faint)}
 footer p{max-width:72ch}
+
+/* language switch */
+.lang{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.04em;color:var(--mute);text-decoration:none;padding:5px 11px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.lang:hover{color:var(--off);border-color:var(--mute)}
+@media (max-width:980px){.nav .wrap>.lang{margin-left:auto}.nav .wrap>.lang+.btn{margin-left:0}}
 </style>
 </head>
 <body>
@@ -264,64 +269,65 @@ footer p{max-width:72ch}
 <div class="wrap">
 <a class="brand" href="#top">Gym-Arc <span class="mono">by DataArc</span></a>
 <div class="links">
-<a href="#products">Products</a>
-<a href="#process">How we work</a>
-<a href="#results">Results</a>
-<a class="nav-rsi" href="rsi.html">RSI loop</a>
-<a href="#why">Why Gym-Arc</a>
-<a href="#industries">Industries</a>
+<a href="#products">产品</a>
+<a href="#process">合作流程</a>
+<a href="#results">效果</a>
+<a class="nav-rsi" href="rsi.html">RSI 闭环</a>
+<a href="#why">为什么选我们</a>
+<a href="#industries">行业</a>
 <a href="#faq">FAQ</a>
 </div>
-<a class="btn primary sm" href="#contact">Book a demo</a>
+<a class="lang" href="en/" hreflang="en" lang="en">EN</a>
+<a class="btn primary sm" href="#contact">预约演示</a>
 
 </div>
 </nav>
 <header class="hero" id="top">
 <div class="wrap">
 <div>
-<span class="eyebrow">Enterprise RL environments · Verifiers · Evals</span>
+<span class="eyebrow">企业级 RL 环境 · Verifier · Eval</span>
 <h1>
 
-Turn your business rules into environments that train agents<span class="dot">.</span>
+把业务规则，变成训练 Agent 的环境<span class="dot">.</span>
 </h1>
 
-<p class="lede">Your agent shines in the demo, then breaks at the next client with a different rulebook. Gym-Arc turns each company's rules into a decision environment you can train on and verify against, so your model learns to read the rules before it acts, and proves it on companies it has never seen.</p>
+<p class="lede">Agent 在演示里表现很好，换一家规则不同的客户就开始出错。Gym-Arc 把每家企业的规则编译成可训练、可验收的决策环境：模型先学会读懂规则再行动，并在从没见过的企业上证明这一点。</p>
 <div class="cta">
-<a class="btn primary" href="#contact">Book a demo</a>
-<a class="btn" href="rsi.html">See the RSI loop live →</a>
+<a class="btn primary" href="#contact">预约演示</a>
+<a class="btn" href="rsi.html">看 RSI 闭环如何运转 →</a>
 </div>
 <div class="chips">
-<span><b>0</b> lines of code to add a company</span>
-<span><b>Gymnasium · TRL</b> native interfaces</span>
-<span><b>3.2×</b> better decisions at unseen companies</span>
+<span>新增一家企业 <b>0</b> 行代码</span>
+<span>原生支持 <b>Gymnasium · TRL</b></span>
+<span>在没见过的企业上，决策质量提升 <b>3.2×</b></span>
 </div>
 </div>
 <figure class="mosaic-card">
 <div class="mosaic-head">
-<strong>One task family, 26 company environments</strong>
-<span class="mono">HK insurance brokerage</span>
+<strong>一个任务族，26 家企业环境</strong>
+<span class="mono">香港保险经纪</span>
 </div>
 <div class="mosaic-scroll">
-<div aria-label="Rule values of 26 company environments across 12 rule dimensions" class="mosaic" id="mosaic" role="img"></div>
+<div aria-label="26 家企业环境在 12 个规则维度上的取值" class="mosaic" id="mosaic" role="img"></div>
 <div class="mosaic-groups" id="mosaic-groups"></div>
 </div>
 <div class="legend">
-<span><i style="background:var(--carbon-4)"></i>industry default</span>
-<span><i style="background:rgba(254,254,254,.55)"></i>house-specific rule</span>
-<span><i style="background:var(--lime)"></i>rule never seen in training</span>
+<span><i style="background:var(--carbon-4)"></i>行业惯例</span>
+<span><i style="background:rgba(254,254,254,.55)"></i>本公司特有规则</span>
+<span><i style="background:var(--lime)"></i>训练中从未出现的取值</span>
 </div>
 <figcaption aria-live="polite" class="mosaic-tip" id="mosaic-tip">
 
-Each column is a company and each cell one of its rules: product shelf, approval threshold, eligibility, disclosure timing and more. Hover a cell.
+每一列是一家企业，每一格是它的一条规则：产品货架、审批门槛、客群准入、披露时点等。鼠标移到格子上查看。
 </figcaption>
 </figure>
 </div>
 </header>
 <div class="stack">
 <div class="wrap">
-<span class="mono">Plugs into your stack</span>
+<span class="mono">直接接入你的技术栈</span>
 <ul>
-<li>Gymnasium</li><li>Hugging Face TRL</li><li>Transformers</li><li>PyTorch</li><li>SFT · GRPO</li><li>Your own decision models</li>
+<li>Gymnasium</li><li>Hugging Face TRL</li><li>Transformers</li><li>PyTorch</li><li>SFT · GRPO</li><li>自研决策模型</li>
 </ul>
 </div>
 </div>
@@ -329,33 +335,33 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="wrap">
 <div class="sec-head">
 <div>
-<span class="mono">Sound familiar?</span>
-<h2>Industry agents stall at the last mile: every company plays by its own rules</h2>
+<span class="mono">似曾相识？</span>
+<h2>行业 Agent 卡在最后一公里：每家企业都有自己的规矩</h2>
 </div>
 
-<p class="lede">Product shelves, approval thresholds, eligibility policy, disclosure timing, house preferences. A general model can read the handbook, yet it cannot tell what a rule is worth at this step.</p>
+<p class="lede">产品货架、审批门槛、客群准入、披露时点、内部偏好，各家都不一样。通用大模型读得懂手册，却判断不了这条规则在当前这一步意味着什么。</p>
 </div>
 <div class="grid3">
 <div class="panel pain">
 
-<p class="q">We tuned it for our first client. At the second one it started breaking rules.</p>
+<p class="q">给第一家客户调好了，到第二家就开始违规。</p>
 
-<p class="">The model memorised one company's playbook instead of learning to read rules.</p>
-<p class="fix"><b>GYM-ARC</b>Train across many company environments; sign off on companies the model has never seen.</p>
+<p class="">模型背下了一家公司的打法，而不是学会读规则。</p>
+<p class="fix"><b>GYM-ARC</b>在多家企业环境上一起训练，并在从没见过的企业上验收。</p>
 </div>
 <div class="panel pain">
 
-<p class="q">We rewarded closed deals, and the model learned to push.</p>
+<p class="q">我们按成交给奖励，模型就学会了硬推。</p>
 
-<p class="">Pressure and guaranteed-return promises close deals too. Rewarding the outcome rewards the violation.</p>
-<p class="fix"><b>GYM-ARC</b>Any violation scores zero, reward follows step-level decision quality, and deals are only reported.</p>
+<p class="">施压、承诺保本同样能促成交易。奖励结果，等于奖励违规。</p>
+<p class="fix"><b>GYM-ARC</b>任何违规直接 0 分；奖励看每一步的决策质量，成交只做报告。</p>
 </div>
 <div class="panel pain">
 
-<p class="q">Expert labels are slow and costly, and they only say which option to pick.</p>
+<p class="q">专家标注又慢又贵，而且只告诉你该选哪个。</p>
 
-<p class="">A hard label never says what a wrong choice costs, so the model cannot learn trade-offs.</p>
-<p class="fix"><b>GYM-ARC</b>The environment prices every action and produces soft labels that carry the cost.</p>
+<p class="">硬标签不会告诉模型选错的代价，模型也就学不会权衡。</p>
+<p class="fix"><b>GYM-ARC</b>环境为每个动作算出价值，生成带代价信息的软标签。</p>
 </div>
 </div>
 </div>
@@ -365,44 +371,44 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="wrap">
 <div class="sec-head">
 <div>
-<span class="mono">Products</span>
-<h2>One engine, three ways to buy it</h2>
+<span class="mono">产品</span>
+<h2>一套引擎，三种交付方式</h2>
 </div>
 
-<p class="lede">Start with evaluation, move to training environments, then to cross-company adaptation. All three share the same environments, Verifier and data pipeline, so you can go deeper as you need.</p>
+<p class="lede">可以从评测切入，再到训练环境，再到跨企业泛化。三者共用同一套环境、Verifier 和数据管线，需要时随时加深。</p>
 </div>
 <div class="offers">
 <article class="offer">
-<div class="name">Gym-Arc Eval<small>Professional evals and benchmarks</small></div>
-<p class="for"><b>For</b> · vertical agent companies, enterprise AI teams, model selection</p>
+<div class="name">Gym-Arc Eval<small>专业评测与 Benchmark</small></div>
+<p class="for"><b>适合</b> · 垂直 Agent 公司、企业 AI 团队、模型选型</p>
 <ul>
-<li>A four-layer Verifier configured with your rules: constraints, decision quality, workflow, business outcome</li>
-<li>Eval sets that separate models and surface violations and failure modes</li>
-<li>Every verdict cites evidence; every number traces back to a run</li>
+<li>按你的规则配置的四层 Verifier：约束、决策质量、流程、业务结果</li>
+<li>拉得开模型差距的评测集，暴露违规和失败模式</li>
+<li>每条判决都有证据，每个数字都能追溯到具体 run</li>
 </ul>
-<p class="proof">Delivered as eval sets + Verifier + report and console</p>
+<p class="proof">交付：评测集 + Verifier + 报告与控制台</p>
 </article>
 <article class="offer core">
 <span class="tag">CORE</span>
-<div class="name">Gym-Arc Env<small>Your company-specific RL environment</small></div>
-<p class="for"><b>For</b> · industry model and agent teams with a training budget</p>
+<div class="name">Gym-Arc Env<small>你公司专属的 RL 环境</small></div>
+<p class="for"><b>适合</b> · 有训练预算的行业模型与 Agent 团队</p>
 <ul>
-<li>A multi-step decision environment delivered through Gymnasium and TRL</li>
-<li>Soft Q labels for every action at every step, ready for SFT and RL</li>
-<li>Lifelike customers with hidden needs, trust and patience who can walk away; labels use only what is observable</li>
-<li>Training recipe: SFT on expert trajectories + GRPO</li>
+<li>多步决策环境，通过 Gymnasium 和 TRL 交付</li>
+<li>每一步、每个动作的 Q 值软标签，可直接用于 SFT 与 RL</li>
+<li>客户有隐藏的需求、信任和耐心，处理不好会离场；标签只用可观测信息</li>
+<li>训练配方：专家轨迹 SFT + GRPO</li>
 </ul>
-<p class="proof">Delivered as environment + labelled datasets + training recipe</p>
+<p class="proof">交付：环境 + 标注数据集 + 训练配方</p>
 </article>
 <article class="offer">
-<div class="name">Gym-Arc Context<small>Cross-company adaptation</small></div>
-<p class="for"><b>For</b> · frontier labs, general-purpose agent teams</p>
+<div class="name">Gym-Arc Context<small>跨企业泛化</small></div>
+<p class="for"><b>适合</b> · 前沿模型实验室、通用 Agent 团队</p>
 <ul>
-<li>A family of company environments per task, with rules you can split, sample and hold out</li>
-<li>Six held-out tiers: new customers, new firms, new combinations, out-of-range values, unseen dimensions, outside partners</li>
-<li>Transfer studies registered before training, with full reports</li>
+<li>每个任务一整族企业环境，规则可拆分、可采样、可留出</li>
+<li>六级留出评测：新客户、新企业、新组合、超范围取值、未见维度、外部合作方</li>
+<li>迁移实验在训练前预注册，附完整报告</li>
 </ul>
-<p class="proof">Delivered as environment family + held-out evals + transfer evidence</p>
+<p class="proof">交付：环境族 + 留出评测 + 迁移证据</p>
 </article>
 </div>
 </div>
@@ -411,27 +417,27 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="wrap">
 <div class="sec-head">
 <div>
-<span class="mono">How we work</span>
-<h2>You hand over documents. We hand back an environment</h2>
+<span class="mono">合作流程</span>
+<h2>你交来资料，我们交回环境</h2>
 </div>
 
-<p class="lede">Onboarding does not rely on an LLM skimming your handbook. Every rule value has a source, and every conflict or ambiguity comes back to you for sign-off.</p>
+<p class="lede">接入不靠大模型「读一遍手册」。每条规则的取值都有出处，任何冲突或歧义都会交回给你确认。</p>
 </div>
 <div class="steps">
-<div class="step"><span class="n">01</span><h3>Send your data pack</h3><p class="">Compliance handbook, product and approval tables, case history, plus a structured intake questionnaire. We provide the templates.</p><div class="out">manual.md · *.csv · cases.csv · intake.yaml</div></div>
-<div class="step"><span class="n">02</span><h3>Deterministic onboarding</h3><p class="">Tables are parsed, behavioural rules are measured from cases, and questionnaire answers are checked line by line against the handbook. Same pack, same result, every time.</p><div class="out">per-rule source report</div></div>
-<div class="step"><span class="n">03</span><h3>Generate your environment</h3><p class="">Task structure, your rules, actions and Verifier combine into one environment. From rules written to environment ready takes about 0.06 s, with no code changes.</p><div class="out">gymnasium.Env · TRL environment_factory</div></div>
-<div class="step"><span class="n">04</span><h3>Train and sign off</h3><p class="">Train your model, then sign off on held-out customers and companies under criteria fixed in advance. Every number in the report is traceable.</p><div class="out">eval report · console</div></div>
+<div class="step"><span class="n">01</span><h3>提交资料包</h3><p class="">合规手册、产品与审批表格、历史工单，加一份结构化问卷。模板由我们提供。</p><div class="out">manual.md · *.csv · cases.csv · intake.yaml</div></div>
+<div class="step"><span class="n">02</span><h3>确定性接入</h3><p class="">表格直接解析，行为类规则从工单里统计得出，问卷答案逐条和手册核对。同一份资料包，每次结果都一样。</p><div class="out">逐条规则的出处报告</div></div>
+<div class="step"><span class="n">03</span><h3>生成你的环境</h3><p class="">任务结构、你的规则、动作集和 Verifier 组合成一个环境。从规则写好到环境可用约 0.06 秒，不改代码。</p><div class="out">gymnasium.Env · TRL environment_factory</div></div>
+<div class="step"><span class="n">04</span><h3>训练与验收</h3><p class="">训练你的模型，再按事先定好的标准在留出客户和留出企业上验收。报告里每个数字都可追溯。</p><div class="out">评测报告 · 控制台</div></div>
 </div>
 <div class="deliv">
-<div class="d"><h4>Company rule pack</h4><p class="">Your rules, structured and versioned</p><code>contexts/&lt;company&gt;.yaml</code></div>
-<div class="d"><h4>Onboarding report</h4><p class="">Source and confidence of every rule, plus uncovered clauses verbatim</p><code>report.json</code></div>
-<div class="d"><h4>RL environment</h4><p class="">Standard interfaces with action masks and illegal-action handling</p><code>GymArcEnv · make_trl_env_class</code></div>
-<div class="d"><h4>Verifier / Judge</h4><p class="">Four-layer verdicts; any failed constraint scores 0</p><code>constraints · quality · workflow · outcome</code></div>
-<div class="d"><h4>Labelled datasets</h4><p class="">Q values and soft labels for every action at every step</p><code>SFT · RL ready</code></div>
-<div class="d"><h4>Held-out eval sets</h4><p class="">New customers, firms, combinations, ranges, dimensions, outside partners</p><code>E1 – E6 · OOD</code></div>
-<div class="d"><h4>Training recipe</h4><p class="">Expert-trajectory SFT, GRPO configs and eval scripts</p><code>ga grpo · configs/training</code></div>
-<div class="d"><h4>Visual console</h4><p class="">Step-by-step replay: what the model saw vs the hidden truth</p><code>console · offline snapshot</code></div>
+<div class="d"><h4>企业规则包</h4><p class="">结构化、带版本的企业规则</p><code>contexts/&lt;company&gt;.yaml</code></div>
+<div class="d"><h4>接入报告</h4><p class="">每条规则的出处与置信度，未覆盖条款原文保留</p><code>report.json</code></div>
+<div class="d"><h4>RL 环境</h4><p class="">标准接口，带动作掩码与非法动作处理</p><code>GymArcEnv · make_trl_env_class</code></div>
+<div class="d"><h4>Verifier / Judge</h4><p class="">四层判决，任一约束不过即 0 分</p><code>constraints · quality · workflow · outcome</code></div>
+<div class="d"><h4>标注数据集</h4><p class="">每一步每个动作的 Q 值与软标签</p><code>SFT · RL ready</code></div>
+<div class="d"><h4>留出评测集</h4><p class="">新客户、新企业、新组合、超范围、新维度、外部合作方</p><code>E1 – E6 · OOD</code></div>
+<div class="d"><h4>训练配方</h4><p class="">专家轨迹 SFT、GRPO 配置与评测脚本</p><code>ga grpo · configs/training</code></div>
+<div class="d"><h4>可视化控制台</h4><p class="">逐步回放：模型看到了什么 vs 隐藏的真实状态</p><code>console · 离线快照</code></div>
 </div>
 </div>
 </section>
@@ -439,33 +445,33 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="wrap">
 <div class="sec-head">
 <div>
-<span class="mono">Results</span>
-<h2>3.2× better decisions at companies the model has never seen</h2>
+<span class="mono">效果</span>
+<h2>在从没见过的企业上，决策质量提升 3.2×</h2>
 </div>
 
-<p class="lede">Same model, different training environments: one company versus twelve, then tested on held-out companies. The study design was committed before training began and the results were judged by rules written in advance.</p>
+<p class="lede">同一个模型，只换训练环境：用 1 家企业训练对比用 12 家企业训练，再到留出企业上测试。实验设计在训练开始前就已提交，结果按事先写好的规则判定。</p>
 </div>
 <div class="proofband">
-<div class="pb"><div class="v num">3.2<small>×</small></div><h4>Better decisions at new companies</h4><p class="">12-company vs single-company training; value lost per decision falls from 3.10 to 0.97</p></div>
-<div class="pb"><div class="v num">3.6<small>×</small></div><h4>Better on unseen rule combinations</h4><p class="">Companies whose rules were each seen, but never together (2.60 → 0.72 value lost)</p></div>
-<div class="pb"><div class="v num">+17.9<small>pt</small></div><h4>More accurate than a rule-briefed LLM</h4><p class="">Fine-tuned decision model vs a general LLM given the rules, and 112× faster</p></div>
-<div class="pb"><div class="v num">34/36</div><h4>Rules onboarded correctly</h4><p class="">Six company data packs onboarded automatically; the remaining 2 rules were flagged for sign-off</p></div>
+<div class="pb"><div class="v num">3.2<small>×</small></div><h4>新企业上的决策质量</h4><p class="">12 家企业训练 vs 单家企业训练；每次决策的价值损失从 3.10 降到 0.97</p></div>
+<div class="pb"><div class="v num">3.6<small>×</small></div><h4>未见规则组合上的决策质量</h4><p class="">每条规则都见过、但从没一起出现过的企业（价值损失 2.60 → 0.72）</p></div>
+<div class="pb"><div class="v num">+17.9<small>pt</small></div><h4>准确率高于拿着规则的大模型</h4><p class="">微调后的决策模型 vs 给了规则说明的通用大模型，且快 112 倍</p></div>
+<div class="pb"><div class="v num">34/36</div><h4>规则自动接入正确</h4><p class="">六家企业资料包自动接入；剩下 2 条标出来交给人工确认</p></div>
 </div>
-<p class="fine">Measured on Gym-Arc benchmark environments built from real-world industry rulebooks, regulations and sales workflows. Full methodology, 95% confidence intervals and per-seed results are available on request.</p>
+<p class="fine">结果来自 Gym-Arc 基准环境，环境依据真实行业的规则手册、监管要求和销售流程构建。完整方法、95% 置信区间与逐 seed 结果可应要求提供。</p>
 <div class="xy" id="frontier">
 <div class="xy-head">
-<h3>More accurate, at a fraction of the latency and cost</h3>
-<p>Insurance decision benchmark, 600 held-out questions. A compact model trained in Gym-Arc against leading general-purpose LLMs. Up and to the left is better.</p>
+<h3>更准，而且延迟和成本只是零头</h3>
+<p>保险决策基准，600 道留出题。Gym-Arc 训练的小模型对比主流通用大模型。越靠左上越好。</p>
 </div>
 <div class="xy-pair">
-<figure class="xy-panel" style="margin:0"><div class="top"><h4>Accuracy × latency</h4><span class="win" id="win-lat"></span></div><div id="chart-lat" role="img" aria-label="Accuracy versus single-request latency, log scale"></div></figure>
-<figure class="xy-panel" style="margin:0"><div class="top"><h4>Accuracy × cost</h4><span class="win" id="win-cost"></span></div><div id="chart-cost" role="img" aria-label="Accuracy versus cost per 1,000 decisions, log scale"></div></figure>
+<figure class="xy-panel" style="margin:0"><div class="top"><h4>准确率 × 延迟</h4><span class="win" id="win-lat"></span></div><div id="chart-lat" role="img" aria-label="准确率与单次请求延迟，对数坐标"></div></figure>
+<figure class="xy-panel" style="margin:0"><div class="top"><h4>准确率 × 成本</h4><span class="win" id="win-cost"></span></div><div id="chart-cost" role="img" aria-label="准确率与每千次决策成本，对数坐标"></div></figure>
 </div>
 <div class="xy-legend">
-<span><i style="background:var(--lime)"></i>Gym-Arc-trained model, self-hosted on one GPU</span>
-<span><i style="background:var(--carbon-4);border:1px solid var(--mute)"></i>Same model before Gym-Arc training</span>
-<span><i style="background:var(--grey);border-radius:50%"></i>General-purpose LLM via API</span>
-<span><i style="background:none;border-top:1px dashed var(--mute);height:0;width:14px;vertical-align:3px"></i>Rule playbook</span>
+<span><i style="background:var(--lime)"></i>Gym-Arc 训练的模型，单卡自部署</span>
+<span><i style="background:var(--carbon-4);border:1px solid var(--mute)"></i>同一模型训练前</span>
+<span><i style="background:var(--grey);border-radius:50%"></i>通用大模型 API</span>
+<span><i style="background:none;border-top:1px dashed var(--mute);height:0;width:14px;vertical-align:3px"></i>规则手册</span>
 </div>
 </div>
 </div>
@@ -474,18 +480,18 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="wrap">
 <div>
 <span class="eyebrow">Business-grounded RSI</span>
-<h2>Watch the loop run, industry by industry.</h2>
-<p class="lede">Load an insurance brokerage, a card centre, an online store or a business bank and follow its own data through Gym-Arc: raw handbooks and case logs become a Context Graph, then synthetic worlds, an RL environment and Judge, a trained agent, and a deployment loop that keeps improving it.</p>
-<div class="cta"><a class="btn primary" href="rsi.html">Open the RSI loop →</a><a class="btn" href="rsi.html#evolve">Jump to self-improvement results</a></div>
-<div class="chips"><span><b>4</b> industries · <b>8</b> companies</span><span><b>36,000</b> case records ingested</span><span><b>57.4% → 69.1%</b> accuracy over 3 deployment cycles</span></div>
+<h2>看业务数据如何驱动模型持续进化</h2>
+<p class="lede">选一家保险经纪行、一家银行卡中心、一家电商店铺或一家对公银行，跟着它自己的数据走一遍 Gym-Arc：原始手册和工单汇成 Context Graph，再生成合成世界、RL 环境与 Judge，训练出 Agent，上线后的反馈又回到下一轮迭代。</p>
+<div class="cta"><a class="btn primary" href="rsi.html">打开 RSI 闭环 →</a><a class="btn" href="rsi.html#evolve">直接看自迭代效果</a></div>
+<div class="chips"><span><b>4</b> 个行业 · <b>8</b> 家企业</span><span>已接入 <b>36,000</b> 条工单</span><span>3 轮部署迭代，准确率 <b>57.4% → 69.1%</b></span></div>
 </div>
 <div class="rsi-steps">
-<a href="rsi.html#sources"><b>01 · DATA</b>Handbooks, tables, case logs, trajectories</a>
-<a href="rsi.html#graph"><b>02 · GRAPH</b>Every rule traced to its source</a>
-<a href="rsi.html#synth"><b>03 · SYNTHESIZE</b>Company families and hidden-state customers</a>
-<a href="rsi.html#envjudge"><b>04 · ENV + JUDGE</b>Compiled from the same Context</a>
-<a href="rsi.html#train"><b>05 · TRAIN</b>Tested on companies never seen</a>
-<a href="rsi.html#evolve"><b>06 · DEPLOY</b>Logs feed the next cycle</a>
+<a href="rsi.html#sources"><b>01 · DATA</b>手册、表格、工单、轨迹</a>
+<a href="rsi.html#graph"><b>02 · GRAPH</b>每条规则都能追到出处</a>
+<a href="rsi.html#synth"><b>03 · SYNTHESIZE</b>企业族与带隐藏状态的客户</a>
+<a href="rsi.html#envjudge"><b>04 · ENV + JUDGE</b>由同一份 Context 编译</a>
+<a href="rsi.html#train"><b>05 · TRAIN</b>在没见过的企业上验收</a>
+<a href="rsi.html#evolve"><b>06 · DEPLOY</b>线上日志进入下一轮</a>
 </div>
 </div>
 </section>
@@ -493,19 +499,19 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="wrap">
 <div class="sec-head">
 <div>
-<span class="mono">Why Gym-Arc</span>
-<h2>Others tell you whether a rule was broken. We tell you what every step was worth</h2>
+<span class="mono">为什么选 Gym-Arc</span>
+<h2>别人告诉你有没有违规，我们告诉你每一步值多少</h2>
 </div>
 
-<p class="lede">The same rule costs different amounts at different decision points. Gym-Arc computes that consequence structure, and that is what it takes to train a model that reads rules.</p>
+<p class="lede">同一条规则，在不同决策点上的代价不同。Gym-Arc 把这套后果结构算出来，这正是训练「会读规则的模型」所需要的。</p>
 </div>
 <div class="why">
-<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>Every step has a price</h3><p class="">At every decision point, every legal action is rolled out counterfactually to get its expected value and regret. Models learn trade-offs, beyond right and wrong.</p></div>
-<div class="w"><div aria-hidden="true" class="ic"><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i></div><h3>No peeking at the answer</h3><p class="">Labels use only what the model can observe. Switching to these labels cut decision loss in bancassurance sales by more than half.</p></div>
-<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>Compliance is the floor</h3><p class="">Fail any constraint and the episode scores 0. Business outcomes are reported apart and never enter the reward, so violations never pay.</p></div>
-<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i></div><h3>Add a company, not code</h3><p class="">Companies differ by one rules file. Adding one takes zero code and under a second from rules to a ready environment.</p></div>
-<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>New industry, just declare it</h3><p class="">Describe customers, actions, rules and rewards in one YAML file; the framework supplies simulator, gold, Verifier and experiments. Three new industries took 0 lines of domain code.</p></div>
-<div class="w"><div aria-hidden="true" class="ic"><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i></div><h3>Results that survive an audit</h3><p class="">Study designs are committed before training with git timestamps to prove it, and every number in the docs and console is re-checked by automated guards.</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>每一步都有价格</h3><p class="">在每个决策点，对每个合法动作做反事实推演，得到期望价值和 regret。模型学到的是权衡，而不只是对错。</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i></div><h3>不偷看答案</h3><p class="">标签只用模型能观测到的信息。换成这种标签后，银保销售场景的决策损失减少一半以上。</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>合规是底线</h3><p class="">任一约束不过，整局 0 分。业务结果单独报告、不进奖励，违规永远不划算。</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i></div><h3>加企业，不加代码</h3><p class="">企业之间只差一份规则文件。新增一家零代码，从规则到环境可用不到一秒。</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>新行业，声明即可</h3><p class="">在一个 YAML 里描述客户、动作、规则和奖励，模拟器、gold、Verifier 和实验由框架提供。三个新行业都是 0 行领域代码。</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i></div><h3>经得起审计的结果</h3><p class="">实验设计在训练前提交，有 git 时间戳为证；文档和控制台里的每个数字都由自动化守卫复核。</p></div>
 </div>
 </div>
 </section>
@@ -513,47 +519,47 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="wrap">
 <div class="sec-head">
 <div>
-<span class="mono">Ready-made task families</span>
-<h2>From financial sales to after-sales service, ready to use</h2>
+<span class="mono">现成的任务族</span>
+<h2>从金融销售到售后服务，开箱即用</h2>
 </div>
 
-<p class="lede">Each task family is built from real industry rulebooks and workflows, with lifelike customers, hidden state, company rule dimensions and multiple company environments. If your industry is missing, one declaration file adds it.</p>
+<p class="lede">每个任务族都依据真实行业的规则手册和业务流程构建，包含拟真客户、隐藏状态、企业规则维度和多家企业环境。没有你的行业？一份声明文件就能加上。</p>
 </div>
 <div class="inds">
-<div class="ind"><h4>Insurance brokerage</h4><p class="">Needs analysis, disclosure, supervisor approval, visitor eligibility, referral to partner insurers.</p><span class="meta">26 company environments · 14 actions</span></div>
-<div class="ind"><h4>Bancassurance sales</h4><p class="">Multi-turn branch conversations with customers who carry trust, patience and objections, and leave if handled badly.</p><span class="meta">22 state variables · 10 actions</span></div>
-<div class="ind"><h4>Insurance lead decisions</h4><p class="">Read one referral lead and choose the best next move.</p><span class="meta">29 state variables · 8 actions</span></div>
-<div class="ind"><h4>Credit-card instalments</h4><p class="">Outbound offers of bill or cash instalments, where rate disclosure and do-not-disturb rules vary by bank.</p><span class="meta">10 actions · 16 reward terms</span></div>
-<div class="ind"><h4>E-commerce after-sales</h4><p class="">Refunds, compensation, proof requirements and fresh-produce rules that differ by store.</p><span class="meta">10 actions · 18 reward terms</span></div>
-<div class="ind"><h4>Small-business lending</h4><p class="">Due-diligence documents, credit-check consent and eligibility thresholds. The same applicant can have a different best next step at another bank.</p><span class="meta">12 actions · 17 reward terms</span></div>
+<div class="ind"><h4>保险经纪</h4><p class="">需求分析、信息披露、主管审批、内地访客准入、转介合作保司。</p><span class="meta">26 家企业环境 · 14 个动作</span></div>
+<div class="ind"><h4>银保销售</h4><p class="">网点多轮对话，客户带着信任、耐心和异议，处理不好就离场。</p><span class="meta">22 个状态变量 · 10 个动作</span></div>
+<div class="ind"><h4>保险线索决策</h4><p class="">读一条转介线索，选出最优的下一步。</p><span class="meta">29 个状态变量 · 8 个动作</span></div>
+<div class="ind"><h4>信用卡分期</h4><p class="">外呼推荐账单分期或现金分期，费率披露与勿扰规则因行而异。</p><span class="meta">10 个动作 · 16 项奖励</span></div>
+<div class="ind"><h4>电商售后</h4><p class="">退款、补偿、凭证要求与生鲜规则，每家店铺各不相同。</p><span class="meta">10 个动作 · 18 项奖励</span></div>
+<div class="ind"><h4>小微贷款</h4><p class="">尽调材料、征信授权与准入门槛。同一个申请人，换一家银行，最优下一步就不同。</p><span class="meta">12 个动作 · 17 项奖励</span></div>
 </div>
 <div class="yours">
-<div><h4>Your industry</h4><p class="">If decisions are multi-step, customer state can be described discretely and company rules fit a handful of dimensions, one domain.yaml brings it in, with an author guide that walks you through it.</p></div>
-<a class="btn" href="#contact">Discuss your use case</a>
+<div><h4>你的行业</h4><p class="">只要决策是多步的、客户状态能离散描述、企业规则能归纳成几个维度，一份 domain.yaml 就能接入，有作者指南一步步带你完成。</p></div>
+<a class="btn" href="#contact">聊聊你的场景</a>
 </div>
 </div>
 </section>
 <section class="band" id="developers">
 <div class="wrap dev">
 <div>
-<span class="mono">For engineering teams</span>
-<h2 style="margin-top:14px">A few lines into your training loop</h2>
+<span class="mono">给工程团队</span>
+<h2 style="margin-top:14px">几行代码接进你的训练循环</h2>
 <ul>
-<li>gymnasium.Env: text observations, discrete actions with action_mask</li>
-<li>TRL environment_factory: one tool per action family, reward straight from the environment</li>
-<li>ga env-check verifies interfaces, reward parity and information leaks in one command</li>
+<li>gymnasium.Env：文本观测，离散动作，带 action_mask</li>
+<li>TRL environment_factory：每类动作一个 tool，奖励直接来自环境</li>
+<li>ga env-check 一条命令检查接口、奖励一致性和信息泄漏</li>
 </ul>
 </div>
-<div aria-label="Python example" class="code"><span class="c"># uv sync --extra rl</span>
+<div aria-label="Python 示例" class="code"><span class="c"># uv sync --extra rl</span>
 <span class="k">from</span> gymarc.core.adapters.gymnasium_env <span class="k">import</span> GymArcEnv
 <span class="k">from</span> gymarc.core.adapters.trl_env <span class="k">import</span> make_trl_env_class
 
-<span class="c"># one environment, several companies' rules</span>
+<span class="c"># 一个环境，多家企业的规则</span>
 env = GymArcEnv(<span class="s">"hk_broker"</span>, contexts=[<span class="s">"firm_03"</span>, <span class="s">"firm_04"</span>])
 obs, info = env.reset(seed=<span class="s">7</span>, options={<span class="s">"context_id"</span>: <span class="s">"firm_04"</span>})
 obs, reward, done, truncated, info = env.step(action)
 
-<span class="c"># the same environment as TRL tools for GRPO</span>
+<span class="c"># 同一个环境作为 TRL tools 用于 GRPO</span>
 BrokerEnv = make_trl_env_class(<span class="s">"hk_broker"</span>)
 trainer = GRPOTrainer(model=..., reward_funcs=[...],
                       environment_factory=BrokerEnv, ...)</div>
@@ -564,44 +570,44 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
 <div class="sec-head">
 <div>
 <span class="mono">FAQ</span>
-<h2>Questions buyers ask</h2>
+<h2>客户常问的问题</h2>
 </div>
 </div>
 <div class="faq">
-<details id="faq-data"><summary>Do we have to share real customer data?</summary><p class="">You don't start with customer data. The environment is built from your rulebook and tables; case history, when available, calibrates rules that only show up in outcomes, such as approval turnaround or underwriting strictness.</p></details>
-<details id="faq-rights"><summary>Who owns the data and the outputs?</summary><p class="">The contract spells out five items: ownership of source data, the general framework, task and evaluation methods, synthetic assets derived from your rules, and whether anything may be licensed to other clients. It is in the agreement from day one.</p></details>
-<details id="faq-models"><summary>Which models are supported?</summary><p class="">Any model you can train through Gymnasium or Hugging Face TRL, plus custom structured decision models. General LLMs can be plugged in as baselines or judges.</p></details>
-<details id="faq-llm"><summary>Why not just give an LLM the rulebook?</summary><p class="">An LLM that reads the rulebook still cannot tell what a rule is worth at this step. In our comparison, a decision model trained in the environment was 17.9 points more accurate than a general LLM given the rules, and 112× faster.</p></details>
-<details id="faq-deploy"><summary>Can it run on our own servers?</summary><p class="">Yes. Environments, onboarding and training are Python and run on your GPU servers; the console is a static page that also works offline.</p></details>
-<details id="faq-time"><summary>How long does it take to onboard a company?</summary><p class="">On the platform side there is no code to change, and rules become a ready environment in under a second. The overall timeline mostly depends on preparing documents; we provide a handbook skeleton, table templates and an intake questionnaire to get it right the first time.</p></details>
+<details id="faq-data"><summary>需要提供真实客户数据吗？</summary><p class="">不需要从客户数据开始。环境由你的规则手册和表格构建；如果有历史工单，会用来校准那些只体现在结果里的规则，比如审批时效、核保尺度。</p></details>
+<details id="faq-rights"><summary>数据和产出归谁？</summary><p class="">合同里写清五项：源数据归属、通用框架、任务与评测方法、由你的规则派生的合成资产，以及能否授权给其他客户。从第一天起就写进协议。</p></details>
+<details id="faq-models"><summary>支持哪些模型？</summary><p class="">任何能通过 Gymnasium 或 Hugging Face TRL 训练的模型，以及自研的结构化决策模型。通用大模型可以作为 baseline 或 Judge 接入。</p></details>
+<details id="faq-llm"><summary>为什么不直接把规则手册给大模型？</summary><p class="">读了手册的大模型，仍然判断不了这条规则在当前这一步值多少。在我们的对比中，环境里训练出的决策模型比拿到规则的通用大模型准确率高 17.9 个点，速度快 112 倍。</p></details>
+<details id="faq-deploy"><summary>能部署在我们自己的服务器上吗？</summary><p class="">可以。环境、接入和训练都是 Python，跑在你的 GPU 服务器上；控制台是静态页面，离线也能用。</p></details>
+<details id="faq-time"><summary>接入一家企业要多久？</summary><p class="">平台侧不用改代码，规则到环境可用不到一秒。整体周期主要取决于资料准备；我们提供手册骨架、表格模板和接入问卷，帮你一次做对。</p></details>
 </div>
 </div>
 </section>
 <section class="close" id="contact">
 <div class="wrap">
 <div>
-<span class="mono">Book a demo</span>
-<h2 style="margin-top:14px">Bring us one of your rulebooks<span class="dot">.</span></h2>
+<span class="mono">预约演示</span>
+<h2 style="margin-top:14px">带一份你的规则手册来<span class="dot">.</span></h2>
 
-<p class="lede" style="margin-top:18px">In the demo we build an environment from one of your rulebooks on the spot: the same customer under your rules and under industry defaults, how the best next step differs, and whether the model picked it.</p>
+<p class="lede" style="margin-top:18px">演示中我们现场用你的一份规则手册搭环境：同一个客户，在你的规则下和在行业惯例下，最优下一步有什么不同，模型有没有选对。</p>
 <div class="mail">
 <span class="addr" id="mail-addr">contact@dataarctech.com</span>
-<button class="btn" id="copy-mail" type="button">Copy email</button>
+<button class="btn" id="copy-mail" type="button">复制邮箱</button>
 </div>
 <a class="site-link" href="https://www.dataarctech.com">www.dataarctech.com</a>
 </div>
 <div class="brief">
-<span class="mono">Demo request template</span>
+<span class="mono">演示需求模板</span>
 <ol>
-<li>Your task: which decisions the agent makes, in which business</li>
-<li>Your rules: one handbook or a few tables is enough</li>
-<li>Your model: what you use today, and whether you want to train or evaluate</li>
+<li>任务：Agent 在什么业务里做哪些决策</li>
+<li>规则：一本手册或几张表格就够</li>
+<li>模型：现在用什么，想训练还是想评测</li>
 </ol>
-<label class="mono" for="brief-text" style="display:block;margin-bottom:8px">Fill in and send to contact@dataarctech.com</label>
+<label class="mono" for="brief-text" style="display:block;margin-bottom:8px">填好后发送到 contact@dataarctech.com</label>
 <textarea id="brief-text" spellcheck="false"></textarea>
 <div class="row">
-<a class="btn primary" id="send-brief" href="mailto:contact@dataarctech.com">Email this request</a>
-<button class="btn" id="copy-brief" type="button">Copy text</button>
+<a class="btn primary" id="send-brief" href="mailto:contact@dataarctech.com">用邮件发送</a>
+<button class="btn" id="copy-brief" type="button">复制文本</button>
 <span aria-live="polite" class="status" id="copy-status"></span>
 </div>
 </div>
@@ -609,21 +615,21 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
 </section>
 <footer>
 <div class="wrap">
-<p>Gym-Arc is a DataArc product. Results are measured on Gym-Arc benchmark environments; company identifiers on this page are illustrative.</p>
+<p>Gym-Arc 是 DataArc 旗下产品。结果来自 Gym-Arc 基准环境；页面中的企业名称仅为示意。</p>
 <span class="mono">DATAARC · 2026</span>
 </div>
 </footer>
 <script>
 (function(){
   var MOSAIC = {"firms":[{"id":"firm_00","g":"train","r":[[0,4,1,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[0,3,1,0],[0,4,1,0],[0,4,1,0],[1,3,1,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_03","g":"train","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[0,3,1,0],[0,3,1,0],[0,4,1,0],[2,4,0,0],[0,3,0,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_06","g":"train","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[2,3,0,0],[1,4,0,0],[1,4,0,0],[1,3,1,0],[1,3,1,0],[0,3,0,0]]},{"id":"firm_08","g":"train","r":[[0,4,1,0],[2,7,1,0],[0,3,1,0],[1,2,0,0],[1,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[0,3,0,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_09","g":"train","r":[[1,4,0,0],[4,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[2,3,0,0],[0,4,1,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_12","g":"train","r":[[1,4,0,0],[4,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[0,3,1,0],[1,3,0,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[1,3,1,0],[2,3,0,0]]},{"id":"firm_13","g":"train","r":[[1,4,0,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[0,3,1,0],[0,4,1,0],[1,4,0,0],[0,3,0,0],[0,3,0,0],[0,3,0,0]]},{"id":"firm_17","g":"train","r":[[2,4,0,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[1,3,0,0],[0,3,1,0],[1,4,0,0],[1,4,0,0],[0,3,0,0],[0,3,0,0],[0,3,0,0]]},{"id":"firm_20","g":"train","r":[[1,4,0,0],[1,7,0,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[0,3,0,0]]},{"id":"firm_21","g":"train","r":[[2,4,0,0],[2,7,1,0],[0,3,1,0],[1,2,0,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[2,4,0,0],[0,3,0,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_22","g":"train","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[2,3,0,0],[1,3,0,0],[1,4,0,0],[2,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_23","g":"train","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[2,3,0,0],[2,3,0,0],[2,4,0,0],[2,4,0,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_04","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_05","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_07","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[1,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_16","g":"E3","r":[[0,4,1,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[2,3,0,0],[0,3,1,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_18","g":"E3","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[2,3,0,0],[0,3,1,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_19","g":"E3","r":[[1,4,0,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[1,3,0,0],[1,3,0,0],[1,4,0,0],[2,4,0,0],[0,3,0,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_02","g":"E4","r":[[0,4,1,0],[6,7,0,1],[0,3,1,0],[1,2,0,0],[0,4,1,0],[1,3,0,0],[1,3,0,0],[0,4,1,0],[2,4,0,0],[2,3,0,1],[1,3,1,0],[0,3,0,0]]},{"id":"firm_10","g":"E4","r":[[1,4,0,0],[0,7,0,1],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[1,3,0,0],[0,4,1,0],[1,4,0,0],[2,3,0,1],[2,3,0,0],[2,3,0,0]]},{"id":"firm_15","g":"E4","r":[[2,4,0,0],[0,7,0,1],[0,3,1,0],[0,2,1,0],[0,4,1,0],[1,3,0,0],[2,3,0,0],[2,4,0,0],[2,4,0,0],[2,3,0,1],[2,3,0,0],[1,3,1,0]]},{"id":"firm_01","g":"E5","r":[[1,4,0,0],[4,7,0,0],[2,3,0,1],[1,2,0,0],[1,4,0,0],[2,3,0,0],[2,3,0,0],[1,4,0,0],[1,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_11","g":"E5","r":[[0,4,1,0],[1,7,0,0],[1,3,0,1],[0,2,1,0],[1,4,0,0],[0,3,1,0],[2,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_14","g":"E5","r":[[2,4,0,0],[1,7,0,0],[1,3,0,1],[1,2,0,0],[2,4,0,0],[2,3,0,0],[2,3,0,0],[0,4,1,0],[2,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"partner_a","g":"E6","r":[[0,4,1,0],[5,7,0,1],[1,3,0,1],[1,2,0,0],[3,4,0,1],[1,3,0,0],[1,3,0,0],[0,4,1,0],[3,4,0,1],[1,3,1,0],[1,3,1,0],[2,3,0,0]]},{"id":"partner_b","g":"E6","r":[[3,4,0,1],[3,7,0,1],[2,3,0,1],[0,2,1,0],[3,4,0,1],[2,3,0,0],[0,3,1,0],[3,4,0,1],[3,4,0,1],[2,3,0,1],[2,3,0,0],[1,3,1,0]]}]};
-  var DIMS = ["Product shelf","Approval threshold","Mainland visitors","FNA timing","RPQ scope","Disclosure timing","Follow-up rule","House-insurer priority","Seniors (65+)","Approval SLA","Underwriting strictness","Cooling-off clawback"];
-  var GROUPS = {train:"training company",E2:"held out: similar new company",E3:"held out: new rule combination",E4:"held out: beyond training range",E5:"held out: unseen rule dimension",E6:"held out: partner company"};
-  var BRIEF = "[Gym-Arc demo request]\nCompany / team:\n1. Task: which decisions does the agent make, in which business?\n2. Rules: handbook / tables / case history we can share:\n3. Model: what we use today; train or evaluate?\nPreferred demo time:";
+  var DIMS = ["产品货架","审批门槛","内地访客","FNA 时点","RPQ 范围","披露时点","跟进规则","主力保司优先","长者（65+）","审批时效","核保尺度","冷静期回拨"];
+  var GROUPS = {train:"训练企业",E2:"留出：相似的新企业",E3:"留出：新的规则组合",E4:"留出：超出训练范围",E5:"留出：未见过的规则维度",E6:"留出：合作方企业"};
+  var BRIEF = "【Gym-Arc 演示需求】\n公司 / 团队：\n1. 任务：Agent 在什么业务里做哪些决策？\n2. 规则：可提供的手册 / 表格 / 历史工单：\n3. 模型：目前在用什么；想训练还是评测？\n希望的演示时间：";
   var EMAIL = "contact@dataarctech.com";
 
   function label(id){
-    var m = /^firm_(\d+)$/.exec(id); if(m) return "Brokerage " + m[1];
-    m = /^partner_(\w)$/.exec(id); if(m) return "Partner " + m[1].toUpperCase();
+    var m = /^firm_(\d+)$/.exec(id); if(m) return "经纪行 " + m[1];
+    m = /^partner_(\w)$/.exec(id); if(m) return "合作方 " + m[1].toUpperCase();
     return id;
   }
 
@@ -631,19 +637,19 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
   var ta = document.getElementById("brief-text"), st = document.getElementById("copy-status");
   var send = document.getElementById("send-brief");
   ta.value = BRIEF;
-  function syncMail(){ send.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Gym-Arc demo request") + "&body=" + encodeURIComponent(ta.value); }
+  function syncMail(){ send.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Gym-Arc 演示需求") + "&body=" + encodeURIComponent(ta.value); }
   ta.addEventListener("input", syncMail);
   syncMail();
   function copy(text, okMsg, el){
     var fallback = function(){
       if(el && el.select){ el.focus(); el.select(); }
       else if(el){ var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
-      st.textContent = "Selected. Press Ctrl/Cmd+C to copy.";
+      st.textContent = "已选中，按 Ctrl/Cmd+C 复制。";
     };
     try{ navigator.clipboard.writeText(text).then(function(){ st.textContent = okMsg; }, fallback); }catch(e){ fallback(); }
   }
-  document.getElementById("copy-brief").addEventListener("click", function(){ copy(ta.value, "Copied. Paste it into an email to " + EMAIL + ".", ta); });
-  document.getElementById("copy-mail").addEventListener("click", function(){ copy(EMAIL, "Email address copied.", document.getElementById("mail-addr")); });
+  document.getElementById("copy-brief").addEventListener("click", function(){ copy(ta.value, "已复制，粘贴到发往 " + EMAIL + " 的邮件即可。", ta); });
+  document.getElementById("copy-mail").addEventListener("click", function(){ copy(EMAIL, "邮箱已复制。", document.getElementById("mail-addr")); });
 
   /* mosaic: columns = companies, rows = rule dimensions (values read from the real configs) */
   var m = document.getElementById("mosaic"), tip = document.getElementById("mosaic-tip");
@@ -663,7 +669,7 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
   m.addEventListener("mouseover", function(e){
     var t = e.target; if(!t.dataset || !t.dataset.f) return;
     var f = byId[t.dataset.f], i = +t.dataset.i, c = f.r[i];
-    var state = c[3] ? "a rule value never seen in training" : (c[2] ? "same as industry default" : "house-specific rule");
+    var state = c[3] ? "训练中从未出现的取值" : (c[2] ? "与行业惯例相同" : "本公司特有规则");
     tip.textContent = "";
     var b = document.createElement("b"); b.textContent = label(f.id); tip.appendChild(b);
     tip.appendChild(document.createTextNode(" · " + GROUPS[f.g]));
@@ -680,7 +686,7 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
       var s = document.createElement("span");
       s.style.width = (counts[g]*w + (counts[g]-1)*gap) + "px";
       if(k < order.length-1) s.style.marginRight = (gapw + 2*gap) + "px";
-      s.textContent = g;
+      s.textContent = g === "train" ? "训练" : g;
       s.title = GROUPS[g];
       gEl.appendChild(s);
     });
@@ -691,9 +697,9 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
   /* accuracy x latency / cost: one log scale per chart, every mark placed by it.
      Values: llm600 accuracy, single-request p50 latency, cost per 1k decisions (self-hosted at rental GPU price; APIs at list price). */
   var PTS = [
-    {n:"Gym-Arc model", acc:0.712, ms:21.6, usd:0.00438, k:"us", dx:10, dy:-12},
-    {n:"Before training", acc:0.307, ms:19.2, usd:0.00376, k:"base", dx:10, dy:16},
-    {n:"Gemini 2.5 Flash + rules", acc:0.530, ms:14431, usd:1.606, k:"api", dx:-8, dy:-12, end:true},
+    {n:"Gym-Arc 模型", acc:0.712, ms:21.6, usd:0.00438, k:"us", dx:10, dy:-12},
+    {n:"训练前", acc:0.307, ms:19.2, usd:0.00376, k:"base", dx:10, dy:16},
+    {n:"Gemini 2.5 Flash + 规则", acc:0.530, ms:14431, usd:1.606, k:"api", dx:-8, dy:-12, end:true},
     {n:"Gemini 2.5 Flash", acc:0.459, ms:4851, usd:1.218, k:"api", dx:-8, dy:-10, end:true},
     {n:"Claude Haiku 4.5", acc:0.406, ms:8547, usd:3.354, k:"api", dx:-8, dy:16, end:true},
     {n:"Qwen3.8-Max", acc:0.417, ms:37096, usd:11.29, k:"api", dx:-8, dy:-6, end:true},
@@ -708,7 +714,7 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
     var s = '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
     s += '<defs><radialGradient id="g-'+id+'" cx="0" cy="0" r="1"><stop offset="0" stop-color="#CFF025" stop-opacity=".22"/><stop offset="1" stop-color="#CFF025" stop-opacity="0"/></radialGradient></defs>';
     s += '<rect x="'+L+'" y="'+T+'" width="'+(pw*0.55)+'" height="'+(ph*0.55)+'" fill="url(#g-'+id+')"/>';
-    s += '<text class="ttl" x="'+(L+8)+'" y="'+(T+14)+'">BETTER</text>';
+    s += '<text class="ttl" x="'+(L+8)+'" y="'+(T+14)+'">更优</text>';
     [0.3,0.4,0.5,0.6,0.7,0.8].forEach(function(a){
       s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(a)+'" y2="'+Y(a)+'" stroke="#2a2f34" stroke-width="1"/>';
       s += '<text class="ax" x="'+(L-8)+'" y="'+(Y(a)+3)+'" text-anchor="end">'+Math.round(a*100)+'%</text>';
@@ -719,7 +725,7 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
     });
     s += '<text class="ttl" x="'+(L+pw/2)+'" y="'+(H-6)+'" text-anchor="middle">'+title+'</text>';
     s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(RULE)+'" y2="'+Y(RULE)+'" stroke="#9BA3A8" stroke-dasharray="5 4" stroke-width="1"/>';
-    s += '<text class="ax" x="'+(L+8)+'" y="'+(Y(RULE)-5)+'">Rule playbook 45.6%</text>';
+    s += '<text class="ax" x="'+(L+8)+'" y="'+(Y(RULE)-5)+'">规则手册 45.6%</text>';
     PTS.forEach(function(p){
       var cx=X(p[key]), cy=Y(p.acc);
       if(p.k==="us"){
@@ -738,11 +744,11 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
   }
   var ms = function(v){ return v>=1000 ? (v/1000)+'s' : v+'ms'; };
   var usd = function(v){ return '$'+v; };
-  chart("chart-lat", "ms", 8, 60000, [10,100,1000,10000], ms, "SINGLE-REQUEST LATENCY, P50 (LOG)");
-  chart("chart-cost", "usd", 0.002, 20, [0.01,0.1,1,10], usd, "COST PER 1,000 DECISIONS, USD (LOG)");
+  chart("chart-lat", "ms", 8, 60000, [10,100,1000,10000], ms, "单次请求延迟 P50（对数）");
+  chart("chart-cost", "usd", 0.002, 20, [0.01,0.1,1,10], usd, "每千次决策成本，美元（对数）");
   var us = PTS[0], gf = PTS[3];
-  document.getElementById("win-lat").textContent = Math.round(gf.ms/us.ms) + "× faster than Gemini 2.5 Flash";
-  document.getElementById("win-cost").textContent = Math.round(gf.usd/us.usd) + "× cheaper than Gemini 2.5 Flash";
+  document.getElementById("win-lat").textContent = "比 Gemini 2.5 Flash 快 " + Math.round(gf.ms/us.ms) + "×";
+  document.getElementById("win-cost").textContent = "比 Gemini 2.5 Flash 便宜 " + Math.round(gf.usd/us.usd) + "×";
 })();
 </script>
 
