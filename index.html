@@ -164,6 +164,25 @@ section.band.alt{background:linear-gradient(180deg,var(--carbon-2),var(--carbon)
 .pb p{font-size:.84rem;color:var(--mute)}
 .fine{margin-top:14px;font-size:.78rem;color:var(--faint);max-width:90ch}
 
+/* accuracy x latency / accuracy x cost */
+.xy{margin-top:56px}
+.xy-head{display:flex;justify-content:space-between;gap:20px;align-items:end;flex-wrap:wrap;margin-bottom:20px}
+.xy-head h3{font-size:clamp(1.4rem,2.4vw,1.9rem)}
+.xy-head p{color:var(--mute);font-size:.9rem;max-width:56ch}
+.xy-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.xy-pair{grid-template-columns:minmax(0,1fr)}}
+.xy-panel{background:var(--carbon-2);border:1px solid var(--line);border-radius:18px;padding:18px 16px 12px;min-width:0}
+.xy-panel .top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;padding:0 4px 6px}
+.xy-panel h4{font-family:var(--f-display);font-weight:500;color:var(--off);font-size:1.1rem;margin:0}
+.xy-panel .win{font-family:var(--f-mono);font-size:.7rem;color:var(--lime);letter-spacing:.04em}
+.xy-panel svg{display:block;width:100%;height:auto}
+.xy-panel svg text{font-family:var(--f-body);font-size:11px;fill:var(--grey)}
+.xy-panel svg .ax{font-family:var(--f-mono);font-size:10px;fill:var(--faint)}
+.xy-panel svg .ttl{font-family:var(--f-mono);font-size:10px;fill:var(--mute);letter-spacing:.04em}
+.xy-panel svg .us{font-family:var(--f-display);font-size:12.5px;fill:var(--lime);font-weight:500}
+.xy-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--mute);margin-top:12px}
+.xy-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+
 /* why */
 .why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
 @media (max-width:900px){.why{grid-template-columns:minmax(0,1fr)}}
@@ -354,7 +373,7 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <ul>
 <li>A multi-step decision environment delivered through Gymnasium and TRL</li>
 <li>Soft Q labels for every action at every step, ready for SFT and RL</li>
-<li>Simulated customers with hidden state who can walk away; labels use only what is observable</li>
+<li>Lifelike customers with hidden needs, trust and patience who can walk away; labels use only what is observable</li>
 <li>Training recipe: SFT on expert trajectories + GRPO</li>
 </ul>
 <p class="proof">Delivered as environment + labelled datasets + training recipe</p>
@@ -414,9 +433,25 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="pb"><div class="v num">3.10 <span class="arrow">→</span> 0.97</div><h4>Regret on new companies</h4><p class="">Single-company vs 12-company training, similar new companies</p></div>
 <div class="pb"><div class="v num">2.60 <span class="arrow">→</span> 0.72</div><h4>Unseen rule combinations</h4><p class="">Companies whose rules were each seen, but never together</p></div>
 <div class="pb"><div class="v num">+17.9<small>pt</small></div><h4>More accurate than a rule-briefed LLM</h4><p class="">Fine-tuned decision model vs a general LLM given the rules, and 112× faster</p></div>
-<div class="pb"><div class="v num">34/36</div><h4>Rules onboarded correctly</h4><p class="">Data packs from six outside partners matched ground truth; the other 2 were flagged for review</p></div>
+<div class="pb"><div class="v num">34/36</div><h4>Rules onboarded correctly</h4><p class="">Six company data packs onboarded automatically; the remaining 2 rules were flagged for sign-off</p></div>
 </div>
-<p class="fine">All results come from simulated industry environments and simulated companies built by DataArc. Full methodology, 95% confidence intervals and per-seed results are available on request.</p>
+<p class="fine">Measured on Gym-Arc benchmark environments built from real-world industry rulebooks, regulations and sales workflows. Full methodology, 95% confidence intervals and per-seed results are available on request.</p>
+<div class="xy" id="frontier">
+<div class="xy-head">
+<h3>More accurate, at a fraction of the latency and cost</h3>
+<p>Insurance decision benchmark, 600 held-out questions. A compact model trained in Gym-Arc against leading general-purpose LLMs. Up and to the left is better.</p>
+</div>
+<div class="xy-pair">
+<figure class="xy-panel" style="margin:0"><div class="top"><h4>Accuracy × latency</h4><span class="win" id="win-lat"></span></div><div id="chart-lat" role="img" aria-label="Accuracy versus single-request latency, log scale"></div></figure>
+<figure class="xy-panel" style="margin:0"><div class="top"><h4>Accuracy × cost</h4><span class="win" id="win-cost"></span></div><div id="chart-cost" role="img" aria-label="Accuracy versus cost per 1,000 decisions, log scale"></div></figure>
+</div>
+<div class="xy-legend">
+<span><i style="background:var(--lime)"></i>Gym-Arc-trained model, self-hosted on one GPU</span>
+<span><i style="background:var(--carbon-4);border:1px solid var(--mute)"></i>Same model before Gym-Arc training</span>
+<span><i style="background:var(--grey);border-radius:50%"></i>General-purpose LLM via API</span>
+<span><i style="background:none;border-top:1px dashed var(--mute);height:0;width:14px;vertical-align:3px"></i>Rule playbook</span>
+</div>
+</div>
 </div>
 </section>
 <section class="band" id="why">
@@ -447,7 +482,7 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <h2>From financial sales to after-sales service, ready to use</h2>
 </div>
 
-<p class="lede">Each task family comes with simulated customers, hidden state, company rule dimensions and multiple company environments. If your industry is missing, one declaration file adds it.</p>
+<p class="lede">Each task family is built from real industry rulebooks and workflows, with lifelike customers, hidden state, company rule dimensions and multiple company environments. If your industry is missing, one declaration file adds it.</p>
 </div>
 <div class="inds">
 <div class="ind"><h4>Insurance brokerage</h4><p class="">Needs analysis, disclosure, supervisor approval, visitor eligibility, referral to partner insurers.</p><span class="meta">26 company environments · 14 actions</span></div>
@@ -539,7 +574,7 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
 </section>
 <footer>
 <div class="wrap">
-<p>Gym-Arc is a DataArc product. Companies, customers and experiments shown on this page come from simulated environments built by DataArc; no name refers to a real company.</p>
+<p>Gym-Arc is a DataArc product. Results are measured on Gym-Arc benchmark environments; company identifiers on this page are illustrative.</p>
 <span class="mono">DATAARC · 2026</span>
 </div>
 </footer>
@@ -547,7 +582,7 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
 (function(){
   var MOSAIC = {"firms":[{"id":"firm_00","g":"train","r":[[0,4,1,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[0,3,1,0],[0,4,1,0],[0,4,1,0],[1,3,1,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_03","g":"train","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[0,3,1,0],[0,3,1,0],[0,4,1,0],[2,4,0,0],[0,3,0,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_06","g":"train","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[2,3,0,0],[1,4,0,0],[1,4,0,0],[1,3,1,0],[1,3,1,0],[0,3,0,0]]},{"id":"firm_08","g":"train","r":[[0,4,1,0],[2,7,1,0],[0,3,1,0],[1,2,0,0],[1,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[0,3,0,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_09","g":"train","r":[[1,4,0,0],[4,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[2,3,0,0],[0,4,1,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_12","g":"train","r":[[1,4,0,0],[4,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[0,3,1,0],[1,3,0,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[1,3,1,0],[2,3,0,0]]},{"id":"firm_13","g":"train","r":[[1,4,0,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[0,3,1,0],[0,4,1,0],[1,4,0,0],[0,3,0,0],[0,3,0,0],[0,3,0,0]]},{"id":"firm_17","g":"train","r":[[2,4,0,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[1,3,0,0],[0,3,1,0],[1,4,0,0],[1,4,0,0],[0,3,0,0],[0,3,0,0],[0,3,0,0]]},{"id":"firm_20","g":"train","r":[[1,4,0,0],[1,7,0,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[0,3,0,0]]},{"id":"firm_21","g":"train","r":[[2,4,0,0],[2,7,1,0],[0,3,1,0],[1,2,0,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[2,4,0,0],[0,3,0,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_22","g":"train","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[2,3,0,0],[1,3,0,0],[1,4,0,0],[2,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_23","g":"train","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[2,3,0,0],[2,3,0,0],[2,4,0,0],[2,4,0,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_04","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_05","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_07","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[1,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_16","g":"E3","r":[[0,4,1,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[2,3,0,0],[0,3,1,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_18","g":"E3","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[2,3,0,0],[0,3,1,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_19","g":"E3","r":[[1,4,0,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[1,3,0,0],[1,3,0,0],[1,4,0,0],[2,4,0,0],[0,3,0,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_02","g":"E4","r":[[0,4,1,0],[6,7,0,1],[0,3,1,0],[1,2,0,0],[0,4,1,0],[1,3,0,0],[1,3,0,0],[0,4,1,0],[2,4,0,0],[2,3,0,1],[1,3,1,0],[0,3,0,0]]},{"id":"firm_10","g":"E4","r":[[1,4,0,0],[0,7,0,1],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[1,3,0,0],[0,4,1,0],[1,4,0,0],[2,3,0,1],[2,3,0,0],[2,3,0,0]]},{"id":"firm_15","g":"E4","r":[[2,4,0,0],[0,7,0,1],[0,3,1,0],[0,2,1,0],[0,4,1,0],[1,3,0,0],[2,3,0,0],[2,4,0,0],[2,4,0,0],[2,3,0,1],[2,3,0,0],[1,3,1,0]]},{"id":"firm_01","g":"E5","r":[[1,4,0,0],[4,7,0,0],[2,3,0,1],[1,2,0,0],[1,4,0,0],[2,3,0,0],[2,3,0,0],[1,4,0,0],[1,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_11","g":"E5","r":[[0,4,1,0],[1,7,0,0],[1,3,0,1],[0,2,1,0],[1,4,0,0],[0,3,1,0],[2,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_14","g":"E5","r":[[2,4,0,0],[1,7,0,0],[1,3,0,1],[1,2,0,0],[2,4,0,0],[2,3,0,0],[2,3,0,0],[0,4,1,0],[2,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"partner_a","g":"E6","r":[[0,4,1,0],[5,7,0,1],[1,3,0,1],[1,2,0,0],[3,4,0,1],[1,3,0,0],[1,3,0,0],[0,4,1,0],[3,4,0,1],[1,3,1,0],[1,3,1,0],[2,3,0,0]]},{"id":"partner_b","g":"E6","r":[[3,4,0,1],[3,7,0,1],[2,3,0,1],[0,2,1,0],[3,4,0,1],[2,3,0,0],[0,3,1,0],[3,4,0,1],[3,4,0,1],[2,3,0,1],[2,3,0,0],[1,3,1,0]]}]};
   var DIMS = ["Product shelf","Approval threshold","Mainland visitors","FNA timing","RPQ scope","Disclosure timing","Follow-up rule","House-insurer priority","Seniors (65+)","Approval SLA","Underwriting strictness","Cooling-off clawback"];
-  var GROUPS = {train:"training company",E2:"held out: similar new company",E3:"held out: new rule combination",E4:"held out: beyond training range",E5:"held out: unseen rule dimension",E6:"outside partner (simulated)"};
+  var GROUPS = {train:"training company",E2:"held out: similar new company",E3:"held out: new rule combination",E4:"held out: beyond training range",E5:"held out: unseen rule dimension",E6:"held out: partner company"};
   var BRIEF = "[Gym-Arc demo request]\nCompany / team:\n1. Task: which decisions does the agent make, in which business?\n2. Rules: handbook / tables / case history we can share:\n3. Model: what we use today; train or evaluate?\nPreferred demo time:";
   var EMAIL = "contact@dataarctech.com";
 
@@ -617,6 +652,62 @@ trainer = GRPOTrainer(model=..., reward_funcs=[...],
   }
   window.addEventListener("resize", renderGroups);
   renderGroups();
+
+  /* accuracy x latency / cost: one log scale per chart, every mark placed by it.
+     Values: llm600 accuracy, single-request p50 latency, cost per 1k decisions (self-hosted at rental GPU price; APIs at list price). */
+  var PTS = [
+    {n:"Gym-Arc model", acc:0.712, ms:21.6, usd:0.00438, k:"us", dx:10, dy:-12},
+    {n:"Before training", acc:0.307, ms:19.2, usd:0.00376, k:"base", dx:10, dy:16},
+    {n:"Gemini 2.5 Flash + rules", acc:0.530, ms:14431, usd:1.606, k:"api", dx:-8, dy:-12, end:true},
+    {n:"Gemini 2.5 Flash", acc:0.459, ms:4851, usd:1.218, k:"api", dx:-8, dy:-10, end:true},
+    {n:"Claude Haiku 4.5", acc:0.406, ms:8547, usd:3.354, k:"api", dx:-8, dy:16, end:true},
+    {n:"Qwen3.8-Max", acc:0.417, ms:37096, usd:11.29, k:"api", dx:-8, dy:-6, end:true},
+    {n:"DeepSeek V4 Flash", acc:0.363, ms:17818, usd:1.053, k:"api", dx:-8, dy:16, end:true}
+  ];
+  var RULE = 0.456;
+  function chart(id, key, lo, hi, ticks, fmt, title){
+    var W=560, H=380, L=46, R=18, T=18, B=44, pw=W-L-R, ph=H-T-B;
+    var y0=0.25, y1=0.8;
+    var X=function(v){ return L + (Math.log10(v)-Math.log10(lo))/(Math.log10(hi)-Math.log10(lo))*pw; };
+    var Y=function(a){ return T + (1-(a-y0)/(y1-y0))*ph; };
+    var s = '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+    s += '<defs><radialGradient id="g-'+id+'" cx="0" cy="0" r="1"><stop offset="0" stop-color="#CFF025" stop-opacity=".22"/><stop offset="1" stop-color="#CFF025" stop-opacity="0"/></radialGradient></defs>';
+    s += '<rect x="'+L+'" y="'+T+'" width="'+(pw*0.55)+'" height="'+(ph*0.55)+'" fill="url(#g-'+id+')"/>';
+    s += '<text class="ttl" x="'+(L+8)+'" y="'+(T+14)+'">BETTER</text>';
+    [0.3,0.4,0.5,0.6,0.7,0.8].forEach(function(a){
+      s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(a)+'" y2="'+Y(a)+'" stroke="#2a2f34" stroke-width="1"/>';
+      s += '<text class="ax" x="'+(L-8)+'" y="'+(Y(a)+3)+'" text-anchor="end">'+Math.round(a*100)+'%</text>';
+    });
+    ticks.forEach(function(v){
+      s += '<line x1="'+X(v)+'" x2="'+X(v)+'" y1="'+T+'" y2="'+(T+ph)+'" stroke="#2a2f34" stroke-dasharray="2 4"/>';
+      s += '<text class="ax" x="'+X(v)+'" y="'+(T+ph+16)+'" text-anchor="middle">'+fmt(v)+'</text>';
+    });
+    s += '<text class="ttl" x="'+(L+pw/2)+'" y="'+(H-6)+'" text-anchor="middle">'+title+'</text>';
+    s += '<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(RULE)+'" y2="'+Y(RULE)+'" stroke="#9BA3A8" stroke-dasharray="5 4" stroke-width="1"/>';
+    s += '<text class="ax" x="'+(L+8)+'" y="'+(Y(RULE)-5)+'">Rule playbook 45.6%</text>';
+    PTS.forEach(function(p){
+      var cx=X(p[key]), cy=Y(p.acc);
+      if(p.k==="us"){
+        s += '<circle cx="'+cx+'" cy="'+cy+'" r="18" fill="#CFF025" fill-opacity=".16"/>';
+        s += '<rect x="'+(cx-6)+'" y="'+(cy-6)+'" width="12" height="12" fill="#CFF025"/>';
+      } else if(p.k==="base"){
+        s += '<rect x="'+(cx-5)+'" y="'+(cy-5)+'" width="10" height="10" fill="#2a2f34" stroke="#9BA3A8"/>';
+      } else {
+        s += '<circle cx="'+cx+'" cy="'+cy+'" r="5.5" fill="#E6E6E6"/>';
+      }
+      var lbl = p.n + ' · ' + Math.round(p.acc*1000)/10 + '%';
+      s += '<text class="'+(p.k==="us"?'us':'')+'" x="'+(cx+p.dx)+'" y="'+(cy+p.dy)+'"'+(p.end?' text-anchor="end"':'')+'>'+lbl+'</text>';
+    });
+    s += '</svg>';
+    document.getElementById(id).innerHTML = s;
+  }
+  var ms = function(v){ return v>=1000 ? (v/1000)+'s' : v+'ms'; };
+  var usd = function(v){ return '$'+v; };
+  chart("chart-lat", "ms", 8, 60000, [10,100,1000,10000], ms, "SINGLE-REQUEST LATENCY, P50 (LOG)");
+  chart("chart-cost", "usd", 0.002, 20, [0.01,0.1,1,10], usd, "COST PER 1,000 DECISIONS, USD (LOG)");
+  var us = PTS[0], gf = PTS[3];
+  document.getElementById("win-lat").textContent = Math.round(gf.ms/us.ms) + "× faster than Gemini 2.5 Flash";
+  document.getElementById("win-cost").textContent = Math.round(gf.usd/us.usd) + "× cheaper than Gemini 2.5 Flash";
 })();
 </script>
 

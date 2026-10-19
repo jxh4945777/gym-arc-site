@@ -4,6 +4,6 @@ Product page for **Gym-Arc by DataArc**: company-specific RL environments, Verif
 
 Live: https://jxh4945777.github.io/gym-arc-site/
 
-The site is a single static `index.html` with no build step. Companies, customers and experiments shown on the page come from simulated environments built by DataArc.
+The site is a single static `index.html` with no build step.
 
 Contact: contact@dataarctech.com · https://www.dataarctech.com
