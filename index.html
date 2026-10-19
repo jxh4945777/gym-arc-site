@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gym-Arc</title>
+<meta content="cover" name="claude:viewport-fit-sides"/>
+<meta content="Gym-Arc by DataArc: company-specific RL environments, Verifiers and evaluations that teach agents to read business rules and decide by them." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&amp;family=Hanken+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+/* Layout: a product page on carbon. Hero = lime glow from off-canvas + a pixel mosaic of 26 companies x 12 rule dims
+   (real configs). Below: pains, three offers, engagement steps, deliverables, proof band, why, industries, dev snippet,
+   FAQ, closing CTA with the second glow. Single deliberate dark theme (Arclek: carbon / lime / off-white). */
+:root{
+  --carbon:#121416; --carbon-2:#171a1d; --carbon-3:#1f2327; --carbon-4:#2a2f34;
+  --lime:#CFF025; --lime-ink:#121416;
+  --off:#FEFEFE; --grey:#E6E6E6; --mute:#9BA3A8; --faint:#6B7378;
+  --line:rgba(254,254,254,.09); --glass:rgba(31,35,39,.62); --code:#0d0f10; --code-str:#A9D7F0;
+  --f-display:"Space Grotesk","Noto Sans SC",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Hanken Grotesk","Noto Sans SC",ui-sans-serif,system-ui,-apple-system,"PingFang SC",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --s-1:.75rem; --s0:.9375rem; --s1:1.0625rem; --s2:1.375rem; --s4:2.6rem; --s5:clamp(2.2rem,4.8vw,4rem);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--carbon);color:var(--grey);font-family:var(--f-body);font-size:var(--s0);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--carbon)}
+a{color:var(--off);text-decoration-color:var(--lime);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;color:var(--off);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:var(--s4);line-height:1.12}
+h3{font-size:var(--s2);line-height:1.25}
+p{margin:0}
+.lede{font-size:var(--s1);color:var(--grey);max-width:62ch}
+.dot{color:var(--lime)}
+.num{font-variant-numeric:tabular-nums}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(18,20,22,.72);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:18px;min-height:60px}
+.brand{font-family:var(--f-display);font-weight:600;font-size:1.15rem;color:var(--off);text-decoration:none;display:flex;align-items:baseline;gap:10px;white-space:nowrap}
+.brand .mono{font-size:.66rem}
+.links{display:flex;gap:18px;margin-left:auto}
+.links a{color:var(--mute);text-decoration:none;font-size:.88rem;white-space:nowrap}
+.links a:hover{color:var(--off)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font-weight:600;font-size:.92rem;text-decoration:none;border:1px solid var(--line);color:var(--off);background:rgba(254,254,254,.04);white-space:nowrap;cursor:pointer;font-family:var(--f-body);transition:transform .15s}
+.btn.primary{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
+.btn:hover{transform:translateY(-1px)}
+.btn.sm{padding:8px 14px;font-size:.84rem}
+@media (max-width:980px){.links{display:none}.nav .wrap>.btn{margin-left:auto}}
+@media (max-width:520px){.brand .mono{display:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 86% 118%,rgba(207,240,37,.5) 0%,rgba(207,240,37,.16) 38%,rgba(207,240,37,0) 70%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent 70%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent 70%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px;padding-block:76px 64px;align-items:center}
+@media (max-width:960px){.hero .wrap{grid-template-columns:minmax(0,1fr);padding-block:48px 40px;gap:36px}}
+.hero h1{font-size:var(--s5);line-height:1.06;margin-block:18px 22px}
+.eyebrow{display:inline-flex;gap:10px;align-items:center;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lime);padding:5px 12px;border-radius:999px;border:1px solid rgba(207,240,37,.4);background:rgba(18,20,22,.5)}
+.cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}
+.chips span{font-size:.8rem;color:var(--grey);padding:6px 12px;border-radius:999px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.chips span b{color:var(--lime);font-weight:600}
+
+/* mosaic */
+.mosaic-card{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:20px 20px 16px;backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%);min-width:0;margin:0}
+.mosaic-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:14px}
+.mosaic-head strong{font-family:var(--f-display);font-weight:500;color:var(--off);font-size:1rem}
+.mosaic-scroll{overflow-x:auto;padding-bottom:4px}
+.mosaic{display:grid;grid-auto-flow:column;grid-template-rows:repeat(12,1fr);gap:3px;width:max-content;min-width:100%}
+.px{width:14px;height:14px;border-radius:2px;background:var(--carbon-4);transition:transform .2s;cursor:crosshair}
+.px.gapcol{width:6px;background:transparent;cursor:default}
+.px:hover{transform:scale(1.35);position:relative;z-index:2}
+.px.oog{background:var(--lime);box-shadow:0 0 10px rgba(207,240,37,.55)}
+@media (max-width:520px){.px{width:10px;height:10px}.px.gapcol{width:4px}}
+.mosaic-groups{display:flex;margin-top:10px;font-family:var(--f-mono);font-size:.62rem;color:var(--faint);width:max-content;min-width:100%}
+.mosaic-groups span{text-align:center;border-top:1px solid var(--carbon-4);padding-top:4px}
+.mosaic-tip{margin-top:12px;min-height:3.2em;font-size:.85rem;color:var(--grey)}
+.mosaic-tip b{color:var(--off);font-weight:500}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:.78rem;color:var(--mute)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+/* stack strip */
+.stack{border-bottom:1px solid var(--line)}
+.stack .wrap{display:flex;gap:28px;align-items:center;flex-wrap:wrap;padding-block:22px}
+.stack .mono{white-space:nowrap}
+.stack ul{display:flex;gap:26px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.stack li{font-family:var(--f-display);font-size:1.05rem;color:var(--mute)}
+
+/* sections */
+section.band{padding-block:92px;border-bottom:1px solid var(--line);position:relative}
+section.band.alt{background:linear-gradient(180deg,var(--carbon-2),var(--carbon))}
+@media (max-width:700px){section.band{padding-block:58px}}
+.sec-head{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:40px;align-items:end;margin-bottom:44px}
+.sec-head .mono{display:block;margin-bottom:14px}
+@media (max-width:900px){.sec-head{grid-template-columns:minmax(0,1fr);gap:16px}}
+.pixstrip{height:6px;background-image:repeating-linear-gradient(90deg,var(--carbon-4) 0 6px,transparent 6px 9px,var(--carbon-4) 9px 15px,transparent 15px 18px,rgba(207,240,37,.7) 18px 24px,transparent 24px 27px);opacity:.8}
+
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.grid3{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:26px;min-width:0;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.panel p{color:var(--mute);font-size:.93rem}
+
+/* pains */
+.pain .q{font-family:var(--f-display);font-size:1.3rem;color:var(--off);line-height:1.35;margin-bottom:14px}
+.pain .q::before{content:"“";color:var(--lime);margin-right:2px}
+.pain .q::after{content:"”";color:var(--lime);margin-left:2px}
+.pain .fix{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:.86rem;color:var(--grey)}
+.pain .fix b{color:var(--lime);font-weight:500;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;display:block;margin-bottom:4px}
+
+/* offers */
+.offers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+@media (max-width:980px){.offers{grid-template-columns:minmax(0,1fr)}}
+.offer{display:flex;flex-direction:column;gap:16px;padding:28px;border-radius:18px;border:1px solid var(--line);background:var(--carbon-2);min-width:0;position:relative;overflow:hidden}
+.offer.core{background:radial-gradient(120% 90% at 100% 0%,rgba(207,240,37,.16),rgba(207,240,37,0) 55%),var(--carbon-3);border-color:rgba(207,240,37,.45)}
+.offer .tag{align-self:flex-start;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;padding:3px 9px;border-radius:999px;background:var(--lime);color:var(--lime-ink)}
+.offer .name{font-family:var(--f-display);font-size:1.6rem;color:var(--off);font-weight:500;line-height:1.1}
+.offer .name small{display:block;font-size:.95rem;color:var(--mute);margin-top:6px;font-weight:400}
+.offer .for{font-size:.86rem;color:var(--mute)}
+.offer .for b{color:var(--grey);font-weight:500}
+.offer ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;flex:1;align-content:start}
+.offer li{font-size:.9rem;color:var(--grey);padding-left:22px;position:relative}
+.offer li::before{content:"";position:absolute;left:2px;top:.55em;width:8px;height:8px;background:var(--lime);border-radius:1px}
+.offer .proof{font-family:var(--f-mono);font-size:.72rem;color:var(--mute);border-top:1px solid var(--line);padding-top:14px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:18px;overflow:hidden}
+@media (max-width:900px){.steps{grid-template-columns:minmax(0,1fr)}}
+.step{padding:26px;border-right:1px solid var(--line);min-width:0}
+.step:last-child{border-right:0;background:linear-gradient(180deg,rgba(207,240,37,.07),rgba(207,240,37,0))}
+@media (max-width:900px){.step{border-right:0;border-bottom:1px solid var(--line)}.step:last-child{border-bottom:0}}
+.step .n{font-family:var(--f-mono);font-size:.72rem;color:var(--lime);letter-spacing:.08em}
+.step h3{margin-block:10px 10px;font-size:1.2rem}
+.step p{font-size:.88rem;color:var(--mute)}
+.step .out{margin-top:14px;font-family:var(--f-mono);font-size:.68rem;color:var(--grey);letter-spacing:.03em;overflow-wrap:anywhere}
+
+/* deliverables */
+.deliv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+@media (max-width:980px){.deliv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.deliv{grid-template-columns:minmax(0,1fr)}}
+.d{padding:18px;border-radius:14px;border:1px solid var(--line);background:var(--carbon-2);min-width:0}
+.d h4{font-family:var(--f-display);font-weight:500;color:var(--off);font-size:1.02rem;margin:0 0 6px}
+.d p{font-size:.84rem;color:var(--mute)}
+.d code{display:block;margin-top:10px;font-family:var(--f-mono);font-size:.68rem;color:var(--faint);overflow-wrap:anywhere}
+
+/* proof band */
+.proofband{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:18px;overflow:hidden;background:radial-gradient(80% 140% at 0% 0%,rgba(207,240,37,.08),rgba(207,240,37,0) 60%),var(--carbon-2)}
+@media (max-width:900px){.proofband{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.proofband{grid-template-columns:minmax(0,1fr)}}
+.pb{padding:28px 24px;border-right:1px solid var(--line);min-width:0}
+.pb:last-child{border-right:0}
+@media (max-width:900px){.pb{border-bottom:1px solid var(--line)}}
+.pb .v{font-family:var(--f-display);font-size:clamp(2rem,3vw,2.5rem);color:var(--off);line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pb .v .arrow{color:var(--lime)}
+.pb .v small{font-size:1.1rem;color:var(--mute)}
+.pb h4{font-family:var(--f-display);font-weight:500;color:var(--off);margin:14px 0 6px;font-size:1rem}
+.pb p{font-size:.84rem;color:var(--mute)}
+.fine{margin-top:14px;font-size:.78rem;color:var(--faint);max-width:90ch}
+
+/* why */
+.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+@media (max-width:900px){.why{grid-template-columns:minmax(0,1fr)}}
+.w{background:var(--carbon);padding:26px;min-width:0}
+.w .ic{width:34px;height:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:16px}
+.w .ic i{background:var(--carbon-4);border-radius:1px}
+.w .ic i.on{background:var(--lime)}
+.w h3{font-size:1.15rem;margin-bottom:8px}
+.w p{font-size:.88rem;color:var(--mute)}
+
+/* industries */
+.inds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.inds{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.inds{grid-template-columns:minmax(0,1fr)}}
+.ind{padding:22px;border-radius:14px;border:1px solid var(--line);background:var(--carbon-2);min-width:0;display:flex;flex-direction:column;gap:8px}
+.ind h4{font-family:var(--f-display);font-weight:500;color:var(--off);font-size:1.1rem;margin:0}
+.ind p{font-size:.86rem;color:var(--mute);flex:1}
+.ind .meta{font-family:var(--f-mono);font-size:.66rem;color:var(--faint);letter-spacing:.04em}
+.yours{margin-top:12px;padding:22px;border-radius:14px;border:1px dashed rgba(207,240,37,.45);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}
+@media (max-width:700px){.yours{grid-template-columns:minmax(0,1fr)}}
+.yours h4{font-family:var(--f-display);font-weight:500;color:var(--lime);font-size:1.1rem;margin:0 0 6px}
+.yours p{font-size:.88rem;color:var(--mute)}
+
+/* dev */
+.dev{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;align-items:center}
+@media (max-width:900px){.dev{grid-template-columns:minmax(0,1fr)}}
+.dev ul{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px}
+.dev li{font-size:.92rem;color:var(--grey);padding-left:22px;position:relative}
+.dev li::before{content:"→";position:absolute;left:0;color:var(--lime);font-family:var(--f-mono)}
+.code{background:var(--code);border:1px solid var(--line);border-radius:14px;padding:18px;overflow-x:auto;font-family:var(--f-mono);font-size:.78rem;line-height:1.7;color:var(--grey);white-space:pre;min-width:0}
+.code .c{color:var(--faint)} .code .k{color:var(--lime)} .code .s{color:var(--code-str)}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:880px}
+.faq details{border:1px solid var(--line);border-radius:14px;background:var(--carbon-2);padding:0 20px}
+.faq summary{cursor:pointer;list-style:none;padding:18px 0;font-family:var(--f-display);font-size:1.08rem;color:var(--off);display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--lime);font-family:var(--f-mono)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding-bottom:18px;color:var(--mute);font-size:.92rem;max-width:72ch}
+
+/* closing */
+.close{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.close::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 90% at 12% 120%,rgba(207,240,37,.45) 0%,rgba(207,240,37,.12) 40%,rgba(207,240,37,0) 70%);pointer-events:none}
+.close .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;padding-block:96px;align-items:center}
+@media (max-width:900px){.close .wrap{grid-template-columns:minmax(0,1fr);padding-block:60px}}
+.close h2{font-size:clamp(2rem,4vw,3.2rem)}
+.brief{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:22px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);min-width:0}
+.brief ol{margin:12px 0 18px;padding-left:20px;display:grid;gap:10px;color:var(--grey);font-size:.92rem}
+.brief textarea{width:100%;min-height:150px;resize:vertical;background:var(--code);color:var(--grey);border:1px solid var(--line);border-radius:10px;padding:12px;font-family:var(--f-mono);font-size:.76rem;line-height:1.6}
+.brief .row{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.brief .status{font-size:.82rem;color:var(--mute)}
+.mail{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:26px}
+.mail .addr{font-family:var(--f-mono);font-size:1.05rem;color:var(--off);padding:10px 16px;border-radius:999px;border:1px solid rgba(207,240,37,.45);background:rgba(18,20,22,.55);user-select:all}
+.site-link{display:inline-block;margin-top:14px;font-size:.88rem;color:var(--mute)}
+
+footer{padding-block:40px 56px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:.8rem;color:var(--faint)}
+footer p{max-width:72ch}
+</style>
+</head>
+<body>
+<nav aria-label="Sections" class="nav">
+<div class="wrap">
+<a class="brand" href="#top">Gym-Arc <span class="mono">by DataArc</span></a>
+<div class="links">
+<a href="#products">Products</a>
+<a href="#process">How we work</a>
+<a href="#results">Results</a>
+<a href="#why">Why Gym-Arc</a>
+<a href="#industries">Industries</a>
+<a href="#faq">FAQ</a>
+</div>
+<a class="btn primary sm" href="#contact">Book a demo</a>
+
+</div>
+</nav>
+<header class="hero" id="top">
+<div class="wrap">
+<div>
+<span class="eyebrow">Enterprise RL environments · Verifiers · Evals</span>
+<h1>
+
+Turn your business rules into environments that train agents<span class="dot">.</span>
+</h1>
+
+<p class="lede">Your agent shines in the demo, then breaks at the next client with a different rulebook. Gym-Arc turns each company's rules into a decision environment you can train on and verify against, so your model learns to read the rules before it acts, and proves it on companies it has never seen.</p>
+<div class="cta">
+<a class="btn primary" href="#contact">Book a demo</a>
+<a class="btn" href="#products">See products and deliverables</a>
+</div>
+<div class="chips">
+<span><b>0</b> lines of code to add a company</span>
+<span><b>Gymnasium · TRL</b> native interfaces</span>
+<span><b>−69%</b> decision loss on unseen companies</span>
+</div>
+</div>
+<figure class="mosaic-card">
+<div class="mosaic-head">
+<strong>One task family, 26 company environments</strong>
+<span class="mono">HK insurance brokerage</span>
+</div>
+<div class="mosaic-scroll">
+<div aria-label="Rule values of 26 company environments across 12 rule dimensions" class="mosaic" id="mosaic" role="img"></div>
+<div class="mosaic-groups" id="mosaic-groups"></div>
+</div>
+<div class="legend">
+<span><i style="background:var(--carbon-4)"></i>industry default</span>
+<span><i style="background:rgba(254,254,254,.55)"></i>house-specific rule</span>
+<span><i style="background:var(--lime)"></i>rule never seen in training</span>
+</div>
+<figcaption aria-live="polite" class="mosaic-tip" id="mosaic-tip">
+
+Each column is a company and each cell one of its rules: product shelf, approval threshold, eligibility, disclosure timing and more. Hover a cell.
+</figcaption>
+</figure>
+</div>
+</header>
+<div class="stack">
+<div class="wrap">
+<span class="mono">Plugs into your stack</span>
+<ul>
+<li>Gymnasium</li><li>Hugging Face TRL</li><li>Transformers</li><li>PyTorch</li><li>SFT · GRPO</li><li>Your own decision models</li>
+</ul>
+</div>
+</div>
+<section class="band" id="pains">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span class="mono">Sound familiar?</span>
+<h2>Industry agents stall at the last mile: every company plays by its own rules</h2>
+</div>
+
+<p class="lede">Product shelves, approval thresholds, eligibility policy, disclosure timing, house preferences. A general model can read the handbook, yet it cannot tell what a rule is worth at this step.</p>
+</div>
+<div class="grid3">
+<div class="panel pain">
+
+<p class="q">We tuned it for our first client. At the second one it started breaking rules.</p>
+
+<p class="">The model memorised one company's playbook instead of learning to read rules.</p>
+<p class="fix"><b>GYM-ARC</b>Train across many company environments; sign off on companies the model has never seen.</p>
+</div>
+<div class="panel pain">
+
+<p class="q">We rewarded closed deals, and the model learned to push.</p>
+
+<p class="">Pressure and guaranteed-return promises close deals too. Rewarding the outcome rewards the violation.</p>
+<p class="fix"><b>GYM-ARC</b>Any violation scores zero, reward follows step-level decision quality, and deals are only reported.</p>
+</div>
+<div class="panel pain">
+
+<p class="q">Expert labels are slow and costly, and they only say which option to pick.</p>
+
+<p class="">A hard label never says what a wrong choice costs, so the model cannot learn trade-offs.</p>
+<p class="fix"><b>GYM-ARC</b>The environment prices every action and produces soft labels that carry the cost.</p>
+</div>
+</div>
+</div>
+</section>
+<div aria-hidden="true" class="pixstrip"></div>
+<section class="band alt" id="products">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span class="mono">Products</span>
+<h2>One engine, three ways to buy it</h2>
+</div>
+
+<p class="lede">Start with evaluation, move to training environments, then to cross-company adaptation. All three share the same environments, Verifier and data pipeline, so you can go deeper as you need.</p>
+</div>
+<div class="offers">
+<article class="offer">
+<div class="name">Gym-Arc Eval<small>Professional evals and benchmarks</small></div>
+<p class="for"><b>For</b> · vertical agent companies, enterprise AI teams, model selection</p>
+<ul>
+<li>A four-layer Verifier configured with your rules: constraints, decision quality, workflow, business outcome</li>
+<li>Eval sets that separate models and surface violations and failure modes</li>
+<li>Every verdict cites evidence; every number traces back to a run</li>
+</ul>
+<p class="proof">Delivered as eval sets + Verifier + report and console</p>
+</article>
+<article class="offer core">
+<span class="tag">CORE</span>
+<div class="name">Gym-Arc Env<small>Your company-specific RL environment</small></div>
+<p class="for"><b>For</b> · industry model and agent teams with a training budget</p>
+<ul>
+<li>A multi-step decision environment delivered through Gymnasium and TRL</li>
+<li>Soft Q labels for every action at every step, ready for SFT and RL</li>
+<li>Simulated customers with hidden state who can walk away; labels use only what is observable</li>
+<li>Training recipe: SFT on expert trajectories + GRPO</li>
+</ul>
+<p class="proof">Delivered as environment + labelled datasets + training recipe</p>
+</article>
+<article class="offer">
+<div class="name">Gym-Arc Context<small>Cross-company adaptation</small></div>
+<p class="for"><b>For</b> · frontier labs, general-purpose agent teams</p>
+<ul>
+<li>A family of company environments per task, with rules you can split, sample and hold out</li>
+<li>Six held-out tiers: new customers, new firms, new combinations, out-of-range values, unseen dimensions, outside partners</li>
+<li>Transfer studies registered before training, with full reports</li>
+</ul>
+<p class="proof">Delivered as environment family + held-out evals + transfer evidence</p>
+</article>
+</div>
+</div>
+</section>
+<section class="band" id="process">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span class="mono">How we work</span>
+<h2>You hand over documents. We hand back an environment</h2>
+</div>
+
+<p class="lede">Onboarding does not rely on an LLM skimming your handbook. Every rule value has a source, and every conflict or ambiguity comes back to you for sign-off.</p>
+</div>
+<div class="steps">
+<div class="step"><span class="n">01</span><h3>Send your data pack</h3><p class="">Compliance handbook, product and approval tables, case history, plus a structured intake questionnaire. We provide the templates.</p><div class="out">manual.md · *.csv · cases.csv · intake.yaml</div></div>
+<div class="step"><span class="n">02</span><h3>Deterministic onboarding</h3><p class="">Tables are parsed, behavioural rules are measured from cases, and questionnaire answers are checked line by line against the handbook. Same pack, same result, every time.</p><div class="out">per-rule source report</div></div>
+<div class="step"><span class="n">03</span><h3>Generate your environment</h3><p class="">Task structure, your rules, actions and Verifier combine into one environment. From rules written to environment ready takes about 0.06 s, with no code changes.</p><div class="out">gymnasium.Env · TRL environment_factory</div></div>
+<div class="step"><span class="n">04</span><h3>Train and sign off</h3><p class="">Train your model, then sign off on held-out customers and companies under criteria fixed in advance. Every number in the report is traceable.</p><div class="out">eval report · console</div></div>
+</div>
+<div class="deliv">
+<div class="d"><h4>Company rule pack</h4><p class="">Your rules, structured and versioned</p><code>contexts/&lt;company&gt;.yaml</code></div>
+<div class="d"><h4>Onboarding report</h4><p class="">Source and confidence of every rule, plus uncovered clauses verbatim</p><code>report.json</code></div>
+<div class="d"><h4>RL environment</h4><p class="">Standard interfaces with action masks and illegal-action handling</p><code>GymArcEnv · make_trl_env_class</code></div>
+<div class="d"><h4>Verifier / Judge</h4><p class="">Four-layer verdicts; any failed constraint scores 0</p><code>constraints · quality · workflow · outcome</code></div>
+<div class="d"><h4>Labelled datasets</h4><p class="">Q values and soft labels for every action at every step</p><code>SFT · RL ready</code></div>
+<div class="d"><h4>Held-out eval sets</h4><p class="">New customers, firms, combinations, ranges, dimensions, outside partners</p><code>E1 – E6 · OOD</code></div>
+<div class="d"><h4>Training recipe</h4><p class="">Expert-trajectory SFT, GRPO configs and eval scripts</p><code>ga grpo · configs/training</code></div>
+<div class="d"><h4>Visual console</h4><p class="">Step-by-step replay: what the model saw vs the hidden truth</p><code>console · offline snapshot</code></div>
+</div>
+</div>
+</section>
+<section class="band alt" id="results">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span class="mono">Results</span>
+<h2>69% less decision loss on companies the model has never seen</h2>
+</div>
+
+<p class="lede">Same model, different training environments: one company versus twelve, then tested on held-out companies. The study design was committed before training began and the results were judged by rules written in advance.</p>
+</div>
+<div class="proofband">
+<div class="pb"><div class="v num">3.10 <span class="arrow">→</span> 0.97</div><h4>Regret on new companies</h4><p class="">Single-company vs 12-company training, similar new companies</p></div>
+<div class="pb"><div class="v num">2.60 <span class="arrow">→</span> 0.72</div><h4>Unseen rule combinations</h4><p class="">Companies whose rules were each seen, but never together</p></div>
+<div class="pb"><div class="v num">+17.9<small>pt</small></div><h4>More accurate than a rule-briefed LLM</h4><p class="">Fine-tuned decision model vs a general LLM given the rules, and 112× faster</p></div>
+<div class="pb"><div class="v num">34/36</div><h4>Rules onboarded correctly</h4><p class="">Data packs from six outside partners matched ground truth; the other 2 were flagged for review</p></div>
+</div>
+<p class="fine">All results come from simulated industry environments and simulated companies built by DataArc. Full methodology, 95% confidence intervals and per-seed results are available on request.</p>
+</div>
+</section>
+<section class="band" id="why">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span class="mono">Why Gym-Arc</span>
+<h2>Others tell you whether a rule was broken. We tell you what every step was worth</h2>
+</div>
+
+<p class="lede">The same rule costs different amounts at different decision points. Gym-Arc computes that consequence structure, and that is what it takes to train a model that reads rules.</p>
+</div>
+<div class="why">
+<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>Every step has a price</h3><p class="">At every decision point, every legal action is rolled out counterfactually to get its expected value and regret. Models learn trade-offs, beyond right and wrong.</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i></div><h3>No peeking at the answer</h3><p class="">Labels use only what the model can observe. Switching to these labels cut decision loss in bancassurance sales by more than half.</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>Compliance is the floor</h3><p class="">Fail any constraint and the episode scores 0. Business outcomes are reported apart and never enter the reward, so violations never pay.</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i></div><h3>Add a company, not code</h3><p class="">Companies differ by one rules file. Adding one takes zero code and under a second from rules to a ready environment.</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div><h3>New industry, just declare it</h3><p class="">Describe customers, actions, rules and rewards in one YAML file; the framework supplies simulator, gold, Verifier and experiments. Three new industries took 0 lines of domain code.</p></div>
+<div class="w"><div aria-hidden="true" class="ic"><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i></div><h3>Results that survive an audit</h3><p class="">Study designs are committed before training with git timestamps to prove it, and every number in the docs and console is re-checked by automated guards.</p></div>
+</div>
+</div>
+</section>
+<section class="band alt" id="industries">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span class="mono">Ready-made task families</span>
+<h2>From financial sales to after-sales service, ready to use</h2>
+</div>
+
+<p class="lede">Each task family comes with simulated customers, hidden state, company rule dimensions and multiple company environments. If your industry is missing, one declaration file adds it.</p>
+</div>
+<div class="inds">
+<div class="ind"><h4>Insurance brokerage</h4><p class="">Needs analysis, disclosure, supervisor approval, visitor eligibility, referral to partner insurers.</p><span class="meta">26 company environments · 14 actions</span></div>
+<div class="ind"><h4>Bancassurance sales</h4><p class="">Multi-turn branch conversations with customers who carry trust, patience and objections, and leave if handled badly.</p><span class="meta">22 state variables · 10 actions</span></div>
+<div class="ind"><h4>Insurance lead decisions</h4><p class="">Read one referral lead and choose the best next move.</p><span class="meta">29 state variables · 8 actions</span></div>
+<div class="ind"><h4>Credit-card instalments</h4><p class="">Outbound offers of bill or cash instalments, where rate disclosure and do-not-disturb rules vary by bank.</p><span class="meta">10 actions · 16 reward terms</span></div>
+<div class="ind"><h4>E-commerce after-sales</h4><p class="">Refunds, compensation, proof requirements and fresh-produce rules that differ by store.</p><span class="meta">10 actions · 18 reward terms</span></div>
+<div class="ind"><h4>Small-business lending</h4><p class="">Due-diligence documents, credit-check consent and eligibility thresholds. The same applicant can have a different best next step at another bank.</p><span class="meta">12 actions · 17 reward terms</span></div>
+</div>
+<div class="yours">
+<div><h4>Your industry</h4><p class="">If decisions are multi-step, customer state can be described discretely and company rules fit a handful of dimensions, one domain.yaml brings it in, with an author guide that walks you through it.</p></div>
+<a class="btn" href="#contact">Discuss your use case</a>
+</div>
+</div>
+</section>
+<section class="band" id="developers">
+<div class="wrap dev">
+<div>
+<span class="mono">For engineering teams</span>
+<h2 style="margin-top:14px">A few lines into your training loop</h2>
+<ul>
+<li>gymnasium.Env: text observations, discrete actions with action_mask</li>
+<li>TRL environment_factory: one tool per action family, reward straight from the environment</li>
+<li>ga env-check verifies interfaces, reward parity and information leaks in one command</li>
+</ul>
+</div>
+<div aria-label="Python example" class="code"><span class="c"># uv sync --extra rl</span>
+<span class="k">from</span> gymarc.core.adapters.gymnasium_env <span class="k">import</span> GymArcEnv
+<span class="k">from</span> gymarc.core.adapters.trl_env <span class="k">import</span> make_trl_env_class
+
+<span class="c"># one environment, several companies' rules</span>
+env = GymArcEnv(<span class="s">"hk_broker"</span>, contexts=[<span class="s">"firm_03"</span>, <span class="s">"firm_04"</span>])
+obs, info = env.reset(seed=<span class="s">7</span>, options={<span class="s">"context_id"</span>: <span class="s">"firm_04"</span>})
+obs, reward, done, truncated, info = env.step(action)
+
+<span class="c"># the same environment as TRL tools for GRPO</span>
+BrokerEnv = make_trl_env_class(<span class="s">"hk_broker"</span>)
+trainer = GRPOTrainer(model=..., reward_funcs=[...],
+                      environment_factory=BrokerEnv, ...)</div>
+</div>
+</section>
+<section class="band alt" id="faq">
+<div class="wrap">
+<div class="sec-head">
+<div>
+<span class="mono">FAQ</span>
+<h2>Questions buyers ask</h2>
+</div>
+</div>
+<div class="faq">
+<details id="faq-data"><summary>Do we have to share real customer data?</summary><p class="">You don't start with customer data. The environment is built from your rulebook and tables; case history, when available, calibrates rules that only show up in outcomes, such as approval turnaround or underwriting strictness.</p></details>
+<details id="faq-rights"><summary>Who owns the data and the outputs?</summary><p class="">The contract spells out five items: ownership of source data, the general framework, task and evaluation methods, synthetic assets derived from your rules, and whether anything may be licensed to other clients. It is in the agreement from day one.</p></details>
+<details id="faq-models"><summary>Which models are supported?</summary><p class="">Any model you can train through Gymnasium or Hugging Face TRL, plus custom structured decision models. General LLMs can be plugged in as baselines or judges.</p></details>
+<details id="faq-llm"><summary>Why not just give an LLM the rulebook?</summary><p class="">An LLM that reads the rulebook still cannot tell what a rule is worth at this step. In our comparison, a decision model trained in the environment was 17.9 points more accurate than a general LLM given the rules, and 112× faster.</p></details>
+<details id="faq-deploy"><summary>Can it run on our own servers?</summary><p class="">Yes. Environments, onboarding and training are Python and run on your GPU servers; the console is a static page that also works offline.</p></details>
+<details id="faq-time"><summary>How long does it take to onboard a company?</summary><p class="">On the platform side there is no code to change, and rules become a ready environment in under a second. The overall timeline mostly depends on preparing documents; we provide a handbook skeleton, table templates and an intake questionnaire to get it right the first time.</p></details>
+</div>
+</div>
+</section>
+<section class="close" id="contact">
+<div class="wrap">
+<div>
+<span class="mono">Book a demo</span>
+<h2 style="margin-top:14px">Bring us one of your rulebooks<span class="dot">.</span></h2>
+
+<p class="lede" style="margin-top:18px">In the demo we build an environment from one of your rulebooks on the spot: the same customer under your rules and under industry defaults, how the best next step differs, and whether the model picked it.</p>
+<div class="mail">
+<span class="addr" id="mail-addr">contact@dataarctech.com</span>
+<button class="btn" id="copy-mail" type="button">Copy email</button>
+</div>
+<a class="site-link" href="https://www.dataarctech.com">www.dataarctech.com</a>
+</div>
+<div class="brief">
+<span class="mono">Demo request template</span>
+<ol>
+<li>Your task: which decisions the agent makes, in which business</li>
+<li>Your rules: one handbook or a few tables is enough</li>
+<li>Your model: what you use today, and whether you want to train or evaluate</li>
+</ol>
+<label class="mono" for="brief-text" style="display:block;margin-bottom:8px">Fill in and send to contact@dataarctech.com</label>
+<textarea id="brief-text" spellcheck="false"></textarea>
+<div class="row">
+<a class="btn primary" id="send-brief" href="mailto:contact@dataarctech.com">Email this request</a>
+<button class="btn" id="copy-brief" type="button">Copy text</button>
+<span aria-live="polite" class="status" id="copy-status"></span>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="wrap">
+<p>Gym-Arc is a DataArc product. Companies, customers and experiments shown on this page come from simulated environments built by DataArc; no name refers to a real company.</p>
+<span class="mono">DATAARC · 2026</span>
+</div>
+</footer>
+<script>
+(function(){
+  var MOSAIC = {"firms":[{"id":"firm_00","g":"train","r":[[0,4,1,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[0,3,1,0],[0,4,1,0],[0,4,1,0],[1,3,1,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_03","g":"train","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[0,3,1,0],[0,3,1,0],[0,4,1,0],[2,4,0,0],[0,3,0,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_06","g":"train","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[2,3,0,0],[1,4,0,0],[1,4,0,0],[1,3,1,0],[1,3,1,0],[0,3,0,0]]},{"id":"firm_08","g":"train","r":[[0,4,1,0],[2,7,1,0],[0,3,1,0],[1,2,0,0],[1,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[0,3,0,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_09","g":"train","r":[[1,4,0,0],[4,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[2,3,0,0],[0,4,1,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_12","g":"train","r":[[1,4,0,0],[4,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[0,3,1,0],[1,3,0,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[1,3,1,0],[2,3,0,0]]},{"id":"firm_13","g":"train","r":[[1,4,0,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[0,3,1,0],[0,4,1,0],[1,4,0,0],[0,3,0,0],[0,3,0,0],[0,3,0,0]]},{"id":"firm_17","g":"train","r":[[2,4,0,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[1,3,0,0],[0,3,1,0],[1,4,0,0],[1,4,0,0],[0,3,0,0],[0,3,0,0],[0,3,0,0]]},{"id":"firm_20","g":"train","r":[[1,4,0,0],[1,7,0,0],[0,3,1,0],[0,2,1,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[0,3,0,0]]},{"id":"firm_21","g":"train","r":[[2,4,0,0],[2,7,1,0],[0,3,1,0],[1,2,0,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[2,4,0,0],[0,3,0,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_22","g":"train","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[2,3,0,0],[1,3,0,0],[1,4,0,0],[2,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_23","g":"train","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[0,2,1,0],[1,4,0,0],[2,3,0,0],[2,3,0,0],[2,4,0,0],[2,4,0,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_04","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[0,4,1,0],[2,3,0,0],[1,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_05","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[2,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_07","g":"E2","r":[[0,4,1,0],[1,7,0,0],[0,3,1,0],[1,2,0,0],[1,4,0,0],[1,3,0,0],[2,3,0,0],[1,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_16","g":"E3","r":[[0,4,1,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[2,3,0,0],[0,3,1,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_18","g":"E3","r":[[2,4,0,0],[4,7,0,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[2,3,0,0],[0,3,1,0],[2,4,0,0],[1,4,0,0],[0,3,0,0],[2,3,0,0],[1,3,1,0]]},{"id":"firm_19","g":"E3","r":[[1,4,0,0],[2,7,1,0],[0,3,1,0],[0,2,1,0],[2,4,0,0],[1,3,0,0],[1,3,0,0],[1,4,0,0],[2,4,0,0],[0,3,0,0],[1,3,1,0],[1,3,1,0]]},{"id":"firm_02","g":"E4","r":[[0,4,1,0],[6,7,0,1],[0,3,1,0],[1,2,0,0],[0,4,1,0],[1,3,0,0],[1,3,0,0],[0,4,1,0],[2,4,0,0],[2,3,0,1],[1,3,1,0],[0,3,0,0]]},{"id":"firm_10","g":"E4","r":[[1,4,0,0],[0,7,0,1],[0,3,1,0],[0,2,1,0],[0,4,1,0],[0,3,1,0],[1,3,0,0],[0,4,1,0],[1,4,0,0],[2,3,0,1],[2,3,0,0],[2,3,0,0]]},{"id":"firm_15","g":"E4","r":[[2,4,0,0],[0,7,0,1],[0,3,1,0],[0,2,1,0],[0,4,1,0],[1,3,0,0],[2,3,0,0],[2,4,0,0],[2,4,0,0],[2,3,0,1],[2,3,0,0],[1,3,1,0]]},{"id":"firm_01","g":"E5","r":[[1,4,0,0],[4,7,0,0],[2,3,0,1],[1,2,0,0],[1,4,0,0],[2,3,0,0],[2,3,0,0],[1,4,0,0],[1,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"firm_11","g":"E5","r":[[0,4,1,0],[1,7,0,0],[1,3,0,1],[0,2,1,0],[1,4,0,0],[0,3,1,0],[2,3,0,0],[2,4,0,0],[0,4,1,0],[1,3,1,0],[2,3,0,0],[2,3,0,0]]},{"id":"firm_14","g":"E5","r":[[2,4,0,0],[1,7,0,0],[1,3,0,1],[1,2,0,0],[2,4,0,0],[2,3,0,0],[2,3,0,0],[0,4,1,0],[2,4,0,0],[1,3,1,0],[0,3,0,0],[2,3,0,0]]},{"id":"partner_a","g":"E6","r":[[0,4,1,0],[5,7,0,1],[1,3,0,1],[1,2,0,0],[3,4,0,1],[1,3,0,0],[1,3,0,0],[0,4,1,0],[3,4,0,1],[1,3,1,0],[1,3,1,0],[2,3,0,0]]},{"id":"partner_b","g":"E6","r":[[3,4,0,1],[3,7,0,1],[2,3,0,1],[0,2,1,0],[3,4,0,1],[2,3,0,0],[0,3,1,0],[3,4,0,1],[3,4,0,1],[2,3,0,1],[2,3,0,0],[1,3,1,0]]}]};
+  var DIMS = ["Product shelf","Approval threshold","Mainland visitors","FNA timing","RPQ scope","Disclosure timing","Follow-up rule","House-insurer priority","Seniors (65+)","Approval SLA","Underwriting strictness","Cooling-off clawback"];
+  var GROUPS = {train:"training company",E2:"held out: similar new company",E3:"held out: new rule combination",E4:"held out: beyond training range",E5:"held out: unseen rule dimension",E6:"outside partner (simulated)"};
+  var BRIEF = "[Gym-Arc demo request]\nCompany / team:\n1. Task: which decisions does the agent make, in which business?\n2. Rules: handbook / tables / case history we can share:\n3. Model: what we use today; train or evaluate?\nPreferred demo time:";
+  var EMAIL = "contact@dataarctech.com";
+
+  function label(id){
+    var m = /^firm_(\d+)$/.exec(id); if(m) return "Brokerage " + m[1];
+    m = /^partner_(\w)$/.exec(id); if(m) return "Partner " + m[1].toUpperCase();
+    return id;
+  }
+
+  /* demo request: mailto carrying the filled template, plus copy fallbacks */
+  var ta = document.getElementById("brief-text"), st = document.getElementById("copy-status");
+  var send = document.getElementById("send-brief");
+  ta.value = BRIEF;
+  function syncMail(){ send.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Gym-Arc demo request") + "&body=" + encodeURIComponent(ta.value); }
+  ta.addEventListener("input", syncMail);
+  syncMail();
+  function copy(text, okMsg, el){
+    var fallback = function(){
+      if(el && el.select){ el.focus(); el.select(); }
+      else if(el){ var r = document.createRange(); r.selectNodeContents(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      st.textContent = "Selected. Press Ctrl/Cmd+C to copy.";
+    };
+    try{ navigator.clipboard.writeText(text).then(function(){ st.textContent = okMsg; }, fallback); }catch(e){ fallback(); }
+  }
+  document.getElementById("copy-brief").addEventListener("click", function(){ copy(ta.value, "Copied. Paste it into an email to " + EMAIL + ".", ta); });
+  document.getElementById("copy-mail").addEventListener("click", function(){ copy(EMAIL, "Email address copied.", document.getElementById("mail-addr")); });
+
+  /* mosaic: columns = companies, rows = rule dimensions (values read from the real configs) */
+  var m = document.getElementById("mosaic"), tip = document.getElementById("mosaic-tip");
+  var prevG = null;
+  MOSAIC.firms.forEach(function(f){
+    if(prevG && prevG !== f.g){ for(var k=0;k<12;k++){ var g=document.createElement("div"); g.className="px gapcol"; m.appendChild(g); } }
+    prevG = f.g;
+    f.r.forEach(function(c, i){
+      var d = document.createElement("div"); d.className = "px";
+      if(c[3]){ d.classList.add("oog"); }
+      else if(!c[2]){ var a = 0.22 + 0.55*((c[0]+1)/Math.max(c[1],2)); d.style.background = "rgba(254,254,254,"+a.toFixed(2)+")"; }
+      d.dataset.f = f.id; d.dataset.i = i;
+      m.appendChild(d);
+    });
+  });
+  var byId = {}; MOSAIC.firms.forEach(function(f){ byId[f.id] = f; });
+  m.addEventListener("mouseover", function(e){
+    var t = e.target; if(!t.dataset || !t.dataset.f) return;
+    var f = byId[t.dataset.f], i = +t.dataset.i, c = f.r[i];
+    var state = c[3] ? "a rule value never seen in training" : (c[2] ? "same as industry default" : "house-specific rule");
+    tip.textContent = "";
+    var b = document.createElement("b"); b.textContent = label(f.id); tip.appendChild(b);
+    tip.appendChild(document.createTextNode(" · " + GROUPS[f.g]));
+    tip.appendChild(document.createElement("br"));
+    tip.appendChild(document.createTextNode(DIMS[i] + " · " + state));
+  });
+
+  var gEl = document.getElementById("mosaic-groups");
+  function renderGroups(){
+    var small = window.innerWidth <= 520, w = small ? 10 : 14, gap = 3, gapw = small ? 4 : 6;
+    var counts = {}; MOSAIC.firms.forEach(function(f){ counts[f.g] = (counts[f.g]||0) + 1; });
+    gEl.innerHTML = "";
+    ["train","E2","E3","E4","E5","E6"].forEach(function(g, k, order){
+      var s = document.createElement("span");
+      s.style.width = (counts[g]*w + (counts[g]-1)*gap) + "px";
+      if(k < order.length-1) s.style.marginRight = (gapw + 2*gap) + "px";
+      s.textContent = g;
+      s.title = GROUPS[g];
+      gEl.appendChild(s);
+    });
+  }
+  window.addEventListener("resize", renderGroups);
+  renderGroups();
+})();
+</script>
+
+</body>
+</html>
