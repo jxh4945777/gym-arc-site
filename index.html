@@ -49,6 +49,7 @@ p{margin:0}
 .links{display:flex;gap:18px;margin-left:auto}
 .links a{color:var(--mute);text-decoration:none;font-size:.88rem;white-space:nowrap}
 .links a:hover{color:var(--off)}
+.links a.nav-rsi{color:var(--lime)}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font-weight:600;font-size:.92rem;text-decoration:none;border:1px solid var(--line);color:var(--off);background:rgba(254,254,254,.04);white-space:nowrap;cursor:pointer;font-family:var(--f-body);transition:transform .15s}
 .btn.primary{background:var(--lime);color:var(--lime-ink);border-color:var(--lime)}
 .btn:hover{transform:translateY(-1px)}
@@ -183,6 +184,20 @@ section.band.alt{background:linear-gradient(180deg,var(--carbon-2),var(--carbon)
 .xy-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--mute);margin-top:12px}
 .xy-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
 
+/* RSI loop teaser */
+.rsi-band{position:relative;overflow:hidden;padding-block:72px;border-bottom:1px solid var(--line);background:var(--carbon)}
+.rsi-band::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 55% 90% at 85% 50%,rgba(207,240,37,.22),rgba(207,240,37,0) 70%);pointer-events:none}
+.rsi-band .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+@media (max-width:900px){.rsi-band .wrap{grid-template-columns:minmax(0,1fr)}}
+.rsi-band h2{margin:14px 0 16px}
+.rsi-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rsi-steps a{display:block;text-decoration:none;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--grey);font-size:.86rem;animation:rsiPulse 7.2s infinite}
+.rsi-steps a b{display:block;font-family:var(--f-mono);font-size:.66rem;color:var(--lime);letter-spacing:.06em;margin-bottom:4px}
+.rsi-steps a:hover{border-color:rgba(207,240,37,.6)}
+.rsi-steps a:nth-child(2){animation-delay:1.2s}.rsi-steps a:nth-child(3){animation-delay:2.4s}.rsi-steps a:nth-child(4){animation-delay:3.6s}.rsi-steps a:nth-child(5){animation-delay:4.8s}.rsi-steps a:nth-child(6){animation-delay:6s}
+@keyframes rsiPulse{0%,14%{border-color:rgba(207,240,37,.7);box-shadow:0 0 22px rgba(207,240,37,.14)}20%,100%{border-color:var(--line);box-shadow:none}}
+@media (max-width:520px){.rsi-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 /* why */
 .why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
 @media (max-width:900px){.why{grid-template-columns:minmax(0,1fr)}}
@@ -252,7 +267,7 @@ footer p{max-width:72ch}
 <a href="#products">Products</a>
 <a href="#process">How we work</a>
 <a href="#results">Results</a>
-<a href="rsi.html">RSI loop</a>
+<a class="nav-rsi" href="rsi.html">RSI loop</a>
 <a href="#why">Why Gym-Arc</a>
 <a href="#industries">Industries</a>
 <a href="#faq">FAQ</a>
@@ -273,12 +288,12 @@ Turn your business rules into environments that train agents<span class="dot">.<
 <p class="lede">Your agent shines in the demo, then breaks at the next client with a different rulebook. Gym-Arc turns each company's rules into a decision environment you can train on and verify against, so your model learns to read the rules before it acts, and proves it on companies it has never seen.</p>
 <div class="cta">
 <a class="btn primary" href="#contact">Book a demo</a>
-<a class="btn" href="#products">See products and deliverables</a>
+<a class="btn" href="rsi.html">See the RSI loop live →</a>
 </div>
 <div class="chips">
 <span><b>0</b> lines of code to add a company</span>
 <span><b>Gymnasium · TRL</b> native interfaces</span>
-<span><b>−69%</b> decision loss on unseen companies</span>
+<span><b>3.2×</b> better decisions at unseen companies</span>
 </div>
 </div>
 <figure class="mosaic-card">
@@ -425,19 +440,18 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <div class="sec-head">
 <div>
 <span class="mono">Results</span>
-<h2>69% less decision loss on companies the model has never seen</h2>
+<h2>3.2× better decisions at companies the model has never seen</h2>
 </div>
 
 <p class="lede">Same model, different training environments: one company versus twelve, then tested on held-out companies. The study design was committed before training began and the results were judged by rules written in advance.</p>
 </div>
 <div class="proofband">
-<div class="pb"><div class="v num">3.10 <span class="arrow">→</span> 0.97</div><h4>Regret on new companies</h4><p class="">Single-company vs 12-company training, similar new companies</p></div>
-<div class="pb"><div class="v num">2.60 <span class="arrow">→</span> 0.72</div><h4>Unseen rule combinations</h4><p class="">Companies whose rules were each seen, but never together</p></div>
+<div class="pb"><div class="v num">3.2<small>×</small></div><h4>Better decisions at new companies</h4><p class="">12-company vs single-company training; value lost per decision falls from 3.10 to 0.97</p></div>
+<div class="pb"><div class="v num">3.6<small>×</small></div><h4>Better on unseen rule combinations</h4><p class="">Companies whose rules were each seen, but never together (2.60 → 0.72 value lost)</p></div>
 <div class="pb"><div class="v num">+17.9<small>pt</small></div><h4>More accurate than a rule-briefed LLM</h4><p class="">Fine-tuned decision model vs a general LLM given the rules, and 112× faster</p></div>
 <div class="pb"><div class="v num">34/36</div><h4>Rules onboarded correctly</h4><p class="">Six company data packs onboarded automatically; the remaining 2 rules were flagged for sign-off</p></div>
 </div>
 <p class="fine">Measured on Gym-Arc benchmark environments built from real-world industry rulebooks, regulations and sales workflows. Full methodology, 95% confidence intervals and per-seed results are available on request.</p>
-<p style="margin-top:18px"><a class="btn" href="rsi.html">Explore the RSI loop →</a></p>
 <div class="xy" id="frontier">
 <div class="xy-head">
 <h3>More accurate, at a fraction of the latency and cost</h3>
@@ -453,6 +467,25 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <span><i style="background:var(--grey);border-radius:50%"></i>General-purpose LLM via API</span>
 <span><i style="background:none;border-top:1px dashed var(--mute);height:0;width:14px;vertical-align:3px"></i>Rule playbook</span>
 </div>
+</div>
+</div>
+</section>
+<section class="rsi-band" id="rsi">
+<div class="wrap">
+<div>
+<span class="eyebrow">Business-grounded RSI</span>
+<h2>Watch the loop run, industry by industry.</h2>
+<p class="lede">Load an insurance brokerage, a card centre, an online store or a business bank and follow its own data through Gym-Arc: raw handbooks and case logs become a Context Graph, then synthetic worlds, an RL environment and Judge, a trained agent, and a deployment loop that keeps improving it.</p>
+<div class="cta"><a class="btn primary" href="rsi.html">Open the RSI loop →</a><a class="btn" href="rsi.html#evolve">Jump to self-improvement results</a></div>
+<div class="chips"><span><b>4</b> industries · <b>8</b> companies</span><span><b>36,000</b> case records ingested</span><span><b>57.4% → 69.1%</b> accuracy over 3 deployment cycles</span></div>
+</div>
+<div class="rsi-steps">
+<a href="rsi.html#sources"><b>01 · DATA</b>Handbooks, tables, case logs, trajectories</a>
+<a href="rsi.html#graph"><b>02 · GRAPH</b>Every rule traced to its source</a>
+<a href="rsi.html#synth"><b>03 · SYNTHESIZE</b>Company families and hidden-state customers</a>
+<a href="rsi.html#envjudge"><b>04 · ENV + JUDGE</b>Compiled from the same Context</a>
+<a href="rsi.html#train"><b>05 · TRAIN</b>Tested on companies never seen</a>
+<a href="rsi.html#evolve"><b>06 · DEPLOY</b>Logs feed the next cycle</a>
 </div>
 </div>
 </section>
