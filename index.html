@@ -185,6 +185,20 @@ section.band.alt{background:linear-gradient(180deg,var(--carbon-2),var(--carbon)
 .xy-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
 
 /* RSI loop teaser */
+.studio-band{position:relative;overflow:hidden;padding-block:80px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--carbon) 0%,#0d0f10 100%)}
+.studio-band::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 15% 20%,rgba(207,240,37,.14),rgba(207,240,37,0) 70%);pointer-events:none}
+.studio-band .wrap{position:relative}
+.studio-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:36px}
+@media (max-width:900px){.studio-head{grid-template-columns:minmax(0,1fr);gap:16px}}
+.studio-head h2{margin:14px 0 0}
+.studio-main{margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03);box-shadow:0 30px 80px -30px rgba(207,240,37,.25)}
+.studio-main img,.studio-tiles img{display:block;width:100%;height:auto}
+.studio-main figcaption,.studio-tiles figcaption{padding:12px 16px;font-size:.86rem;color:var(--mute);border-top:1px solid var(--line)}
+.studio-main figcaption b,.studio-tiles figcaption b{color:var(--off);font-weight:600;margin-right:6px}
+.studio-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
+@media (max-width:900px){.studio-tiles{grid-template-columns:minmax(0,1fr)}}
+.studio-tiles figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.03)}
+.studio-band .cta{margin-top:28px}
 .rsi-band{position:relative;overflow:hidden;padding-block:72px;border-bottom:1px solid var(--line);background:var(--carbon)}
 .rsi-band::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 55% 90% at 85% 50%,rgba(207,240,37,.22),rgba(207,240,37,0) 70%);pointer-events:none}
 .rsi-band .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
@@ -273,6 +287,7 @@ footer p{max-width:72ch}
 <a href="#process">合作流程</a>
 <a href="#results">效果</a>
 <a class="nav-rsi" href="rsi.html">RSI 闭环</a>
+<a href="#studio">Studio</a>
 <a href="#why">为什么选我们</a>
 <a href="#industries">行业</a>
 <a href="#faq">FAQ</a>
@@ -493,6 +508,24 @@ footer p{max-width:72ch}
 <a href="rsi.html#train"><b>05 · TRAIN</b>在没见过的企业上验收</a>
 <a href="rsi.html#evolve"><b>06 · DEPLOY</b>线上日志进入下一轮</a>
 </div>
+</div>
+</section>
+<section class="studio-band" id="studio">
+<div class="wrap">
+<div class="studio-head">
+<div>
+<span class="eyebrow">Gym-Arc Studio</span>
+<h2>不只是看结果，每一步都能亲手操作</h2>
+</div>
+<p class="lede">Studio 是 Gym-Arc 的可视化平台：上传一家企业的资料包，几秒内编译成 Context Graph；审核低置信规则后发布为一家新企业；生成合成企业族；亲自当 Agent 走一局，打开上帝视角看每个动作值多少，结局由四层 Verifier 判定。后台调用的就是训练用的同一套引擎。</p>
+</div>
+<figure class="studio-main"><img alt="Gym-Arc Studio 试玩页：左侧是 Agent 能看到的规则卡与对话，中间是合法动作，右侧上帝视角显示隐藏状态与每个动作的 Q" height="1000" loading="lazy" src="assets/studio-play.jpg" width="1600"><figcaption><b>试玩</b>你来当 Agent：左边是它能看到的一切，右边上帝视角给出隐藏状态和每个动作的 Q</figcaption></figure>
+<div class="studio-tiles">
+<figure><img alt="接入结果页：Context Graph 从来源文件追到 Verifier 约束" height="1000" loading="lazy" src="assets/studio-ingest-result.jpg" width="1600"><figcaption><b>接入</b>每条规则都能追到手册条款或表格行</figcaption></figure>
+<figure><img alt="合成页：企业 × 规则维度马赛克，偏离行业惯例的格高亮" height="1000" loading="lazy" src="assets/studio-synth.jpg" width="1600"><figcaption><b>合成</b>一眼看出每家企业哪些规则偏离惯例</figcaption></figure>
+<figure><img alt="总览页：Business-grounded RSI 六步闭环与最近操作" height="1000" loading="lazy" src="assets/studio-home.jpg" width="1600"><figcaption><b>总览</b>六步闭环，计数来自真实工作区</figcaption></figure>
+</div>
+<div class="cta"><a class="btn primary" href="#contact">预约演示，开通 Studio 账号 →</a><a class="btn" href="rsi.html">先看 RSI 闭环</a></div>
 </div>
 </section>
 <section class="band" id="why">

@@ -185,6 +185,20 @@ section.band.alt{background:linear-gradient(180deg,var(--carbon-2),var(--carbon)
 .xy-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
 
 /* RSI loop teaser */
+.studio-band{position:relative;overflow:hidden;padding-block:80px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--carbon) 0%,#0d0f10 100%)}
+.studio-band::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 15% 20%,rgba(207,240,37,.14),rgba(207,240,37,0) 70%);pointer-events:none}
+.studio-band .wrap{position:relative}
+.studio-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:36px}
+@media (max-width:900px){.studio-head{grid-template-columns:minmax(0,1fr);gap:16px}}
+.studio-head h2{margin:14px 0 0}
+.studio-main{margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03);box-shadow:0 30px 80px -30px rgba(207,240,37,.25)}
+.studio-main img,.studio-tiles img{display:block;width:100%;height:auto}
+.studio-main figcaption,.studio-tiles figcaption{padding:12px 16px;font-size:.86rem;color:var(--mute);border-top:1px solid var(--line)}
+.studio-main figcaption b,.studio-tiles figcaption b{color:var(--off);font-weight:600;margin-right:6px}
+.studio-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
+@media (max-width:900px){.studio-tiles{grid-template-columns:minmax(0,1fr)}}
+.studio-tiles figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.03)}
+.studio-band .cta{margin-top:28px}
 .rsi-band{position:relative;overflow:hidden;padding-block:72px;border-bottom:1px solid var(--line);background:var(--carbon)}
 .rsi-band::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 55% 90% at 85% 50%,rgba(207,240,37,.22),rgba(207,240,37,0) 70%);pointer-events:none}
 .rsi-band .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
@@ -273,6 +287,7 @@ footer p{max-width:72ch}
 <a href="#process">How we work</a>
 <a href="#results">Results</a>
 <a class="nav-rsi" href="rsi.html">RSI loop</a>
+<a href="#studio">Studio</a>
 <a href="#why">Why Gym-Arc</a>
 <a href="#industries">Industries</a>
 <a href="#faq">FAQ</a>
@@ -493,6 +508,24 @@ Each column is a company and each cell one of its rules: product shelf, approval
 <a href="rsi.html#train"><b>05 · TRAIN</b>Tested on companies never seen</a>
 <a href="rsi.html#evolve"><b>06 · DEPLOY</b>Logs feed the next cycle</a>
 </div>
+</div>
+</section>
+<section class="studio-band" id="studio">
+<div class="wrap">
+<div class="studio-head">
+<div>
+<span class="eyebrow">Gym-Arc Studio</span>
+<h2>Not a report. Every step is something you can operate.</h2>
+</div>
+<p class="lede">Studio is the Gym-Arc platform: upload a company's data pack and get its Context Graph in seconds; review the low-confidence rules and publish it as a new company; generate a synthetic company family; play an episode as the agent with a god view of the hidden state and the Q of every action, judged at the end by the four-layer Verifier. Behind it runs the same engine the training uses.</p>
+</div>
+<figure class="studio-main"><img alt="Gym-Arc Studio play page: the rule card and dialogue the agent sees, the legal actions, and a god view with hidden state and Q per action" height="1000" loading="lazy" src="../assets/studio-play.jpg" width="1600"><figcaption><b>Play</b>You are the agent: on the left everything it sees, on the right the god view with hidden state and Q per action</figcaption></figure>
+<div class="studio-tiles">
+<figure><img alt="Onboarding result: the Context Graph from source files to Verifier constraints" height="1000" loading="lazy" src="../assets/studio-ingest-result.jpg" width="1600"><figcaption><b>Onboard</b>Every rule traces back to a handbook clause or a table row</figcaption></figure>
+<figure><img alt="Synthesis: company by rule-dimension mosaic with deviations from industry practice highlighted" height="1000" loading="lazy" src="../assets/studio-synth.jpg" width="1600"><figcaption><b>Synthesize</b>See at a glance where each company departs from industry practice</figcaption></figure>
+<figure><img alt="Overview: the six-step business-grounded RSI loop and recent activity" height="1000" loading="lazy" src="../assets/studio-home.jpg" width="1600"><figcaption><b>Overview</b>The six-step loop, counted from a live workspace</figcaption></figure>
+</div>
+<div class="cta"><a class="btn primary" href="#contact">Book a demo and get a Studio account →</a><a class="btn" href="rsi.html">See the RSI loop first</a></div>
 </div>
 </section>
 <section class="band" id="why">
